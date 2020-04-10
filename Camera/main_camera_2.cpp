@@ -11,25 +11,32 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "../camera.h"
-
 #define WIDTH 640
 #define HEIGHT 480
 
 using namespace std;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void cursorMovementCallback(GLFWwindow* window, double x, double y);
 
 void processInput(GLFWwindow* window);
 bool checkShaderCompilationStatus(GLuint shader);
 bool checkProgramCompilationStatus(GLuint program);
 
+glm::mat4 lookAt(glm::vec3 cameraPos, glm::vec3 target, glm::vec3 up);
 
-Camera camera(glm::vec3(0.0f, 0.0f, 0.0f), -90.0f, 0.0f, 67.5f);
+float t = -2.0f;
+
+glm::vec3 cameraPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+
 
 float deltaTime = 0.0f;
 float lastTime = 0.0f;
+
+float cameraSpeed = 10.0f;
+float cameraRotSpeed = 0.1f;
+
+float yaw = 0.0f;
+float pitch = 0.0f;
 
 int main() {
     glfwInit();
@@ -56,9 +63,6 @@ int main() {
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     if(glfwRawMouseMotionSupported())
         glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
-
-    glfwSetCursorPosCallback(window, cursorMovementCallback);
-
 
     // SHADER PREPARING ------------------------------------------------------
     Program program("Coordinate Systems/vertex2.glsl", "Coordinate Systems/fragment2.glsl");
@@ -171,7 +175,13 @@ int main() {
 
     // MISC ------------------------------------------------------------------
 
-    glm::mat4 model, view, proj;
+    glm::mat4 model = glm::mat4(1.0f);
+
+    glm::mat4 view = glm::mat4(1.0f);
+    view = glm::translate(view, glm::vec3(5.0f, -1.0f, -20.0f));
+    view = glm::rotate(view, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+    glm::mat4 proj = glm::perspective(glm::radians(45.0f), float(WIDTH) / float(HEIGHT), 0.1f, 100.0f);
 
     GLint modelULoc = glGetUniformLocation(program.getProgramID(), "model");
     GLint viewULoc = glGetUniformLocation(program.getProgramID(), "view");
@@ -200,9 +210,11 @@ int main() {
 
         glUniform1i(glGetUniformLocation(program.getProgramID(), "texture1"), 0);
 
-        //BINDING TRANSFORMATIONS
-        view = camera.getCameraTransform();
-        proj = glm::perspective(glm::radians(camera.zoom), float(WIDTH) / float(HEIGHT), 0.1f, 100.0f);
+        //BINDING TRANSFORMATION
+        cameraPosition.x = std::cos(time) * 5.0f;
+        cameraPosition.z = std::sin(time) * 5.0f;
+
+        view = lookAt(cameraPosition, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
         glUniformMatrix4fv(viewULoc, 1, GL_FALSE, glm::value_ptr(view));
         glUniformMatrix4fv(projULoc, 1, GL_FALSE, glm::value_ptr(proj));
@@ -216,6 +228,7 @@ int main() {
             glUniformMatrix4fv(modelULoc, 1, GL_FALSE, glm::value_ptr(model));
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
+        //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -229,17 +242,22 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
 }
 
+glm::mat4 lookAt(glm::vec3 cameraPos, glm::vec3 target, glm::vec3 up) {
+    glm::vec3 f = glm::normalize(target - cameraPos);
+    glm::vec3 r = glm::normalize(glm::cross(f, up));
+    glm::vec3 u = glm::cross(r, f);
+
+    glm::mat4 view;
+    view[0] = glm::vec4(r.x, u.x, -f.x, 0.0f);
+    view[1] = glm::vec4(r.y, u.y, -f.y, 0.0f);
+    view[2] = glm::vec4(r.z, u.z, -f.z, 0.0f);
+    view[3] = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+
+    return glm::translate(view, -cameraPos);
+}
+
 void processInput(GLFWwindow* window) {
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-    if(glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
-        camera.zoom -= deltaTime * 10;
-    if(glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
-        camera.zoom += deltaTime * 10;
 
-    camera.processKeyboard(window, deltaTime);
-}
-
-void cursorMovementCallback(GLFWwindow* window, double x, double y) {
-    camera.processMouse(window, x, y);
 }
