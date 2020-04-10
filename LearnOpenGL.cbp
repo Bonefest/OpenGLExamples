@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="LearnOpenGL" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/LearnOpenGL" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="../Dependecies/include" />
+					<Add directory="/home/miofix/Programming/Graphics/LearnOpenGL" />
+				</Compiler>
+				<Linker>
+					<Add option="../Dependecies/libglfw3.a -lGL -lX11 -lpthread -lXrandr -lXi -ldl" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/LearnOpenGL" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Linker>
+			<Add directory="../Dependecies/glfw_misc/glfw-3.3.1/src" />
+			<Add directory="../Dependecies/glfw_misc/glfw-3.3.1/include/GLFW" />
+			<Add directory="../Dependecies/glfw_misc" />
+		</Linker>
+		<Unit filename="../Dependecies/include/glad/glad.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Camera/main_camera_1.cpp" />
+		<Unit filename="Coordinate Systems/main_coordinates_1.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="Coordinate Systems/main_coordinates_2.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="HelloTriangle/main_hello_triangle_1.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="HelloTriangle/main_hello_triangle_2.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="HelloTriangle/main_hello_triangle_3.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="Practice/Algorithms/1131.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="Practice/Algorithms/1132.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="Practice/Light/blinn_phong_light.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="Practice/heightmap.h" />
+		<Unit filename="Practice/main_heightmap2d.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="Practice/main_heightmap3d.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="Practice/main_practice_projection.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="Program.cpp" />
+		<Unit filename="Program.h" />
+		<Unit filename="Shaders/main_shaders_1.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="Textures/main_textures_1.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="Textures/main_textures_2.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="Textures/main_textures_3.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="Transofrmations/main_transformations_1.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="main.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="send_pos_and_color_in_2different_vbos.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="stb_image.h" />
+		<Extensions>
+			<envvars />
+			<code_completion />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
