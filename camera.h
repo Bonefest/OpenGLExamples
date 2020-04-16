@@ -5,6 +5,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+enum Direction {
+    FRONT, BACK, LEFT, RIGHT
+};
 
 class Camera {
 public:
@@ -14,23 +17,18 @@ public:
                                                                           front(glm::vec3(0.0f, 0.0f, -1.0f)),
                                                                           up(glm::vec3(0.0f, 1.0f, 0.0f)) { }
 
-    void processKeyboard(GLFWwindow* window, float dt) {
+    void processKeyboard(GLFWwindow* window, float dt, Direction direction) {
 
-        glm::vec3 velocity = glm::vec3(0.0f, 0.0f, 0.0f);
-        if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-            velocity += glm::normalize(front) * speed * dt;
-        }
-        if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-            velocity -= glm::normalize(front) * speed * dt;
-        }
-        if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-            velocity -= glm::cross(glm::normalize(front), up) * speed * dt;
-        }
-        if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-            velocity += glm::cross(glm::normalize(front), up) * speed * dt;
-        }
 
-        position += velocity;
+        if(direction == FRONT)
+            position += glm::normalize(front) * speed * dt;
+        else if(direction == BACK)
+            position -= glm::normalize(front) * speed * dt;
+        else if(direction == LEFT)
+            position -= glm::cross(glm::normalize(front), up) * speed * dt;
+        else if(direction == RIGHT)
+            position += glm::cross(glm::normalize(front), up) * speed * dt;
+
         position.y = 0;
     }
 

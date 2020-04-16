@@ -11,25 +11,17 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "../camera.h"
-
 #define WIDTH 640
 #define HEIGHT 480
 
 using namespace std;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void cursorMovementCallback(GLFWwindow* window, double x, double y);
-
 void processInput(GLFWwindow* window);
 bool checkShaderCompilationStatus(GLuint shader);
 bool checkProgramCompilationStatus(GLuint program);
 
-
-Camera camera(glm::vec3(0.0f, 0.0f, 0.0f), -90.0f, 0.0f, 67.5f);
-
-float deltaTime = 0.0f;
-float lastTime = 0.0f;
+float t = -2.0f;
 
 int main() {
     glfwInit();
@@ -52,13 +44,6 @@ int main() {
 
     //glViewport(0, 0, 640, 480); will be called as well for the first loading
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    if(glfwRawMouseMotionSupported())
-        glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
-
-    glfwSetCursorPosCallback(window, cursorMovementCallback);
-
 
     // SHADER PREPARING ------------------------------------------------------
     Program program("Coordinate Systems/vertex2.glsl", "Coordinate Systems/fragment2.glsl");
@@ -163,7 +148,7 @@ int main() {
 
     glm::vec3 cubesLocations[5] = {
         glm::vec3(0.0f, 0.0f, 0.0f),
-        glm::vec3(3.0f,-1.0f, 1.5f),
+        glm::vec3(0.0f, 0.0f, 1.5f),
         glm::vec3(0.0f, 0.0f, 2.5f),
         glm::vec3(0.0f, 0.0f, 3.5f),
         glm::vec3(0.0f, 0.0f, 4.5f)
@@ -171,7 +156,13 @@ int main() {
 
     // MISC ------------------------------------------------------------------
 
-    glm::mat4 model, view, proj;
+    glm::mat4 model = glm::mat4(1.0f);
+
+    glm::mat4 view = glm::mat4(1.0f);
+    view = glm::translate(view, glm::vec3(5.0f, -1.0f, -20.0f));
+    view = glm::rotate(view, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+    glm::mat4 proj = glm::perspective(glm::radians(45.0f), float(WIDTH) / float(HEIGHT), 0.1f, 100.0f);
 
     GLint modelULoc = glGetUniformLocation(program.getProgramID(), "model");
     GLint viewULoc = glGetUniformLocation(program.getProgramID(), "view");
@@ -188,9 +179,6 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         float time = glfwGetTime();
-        deltaTime = time - lastTime;
-
-        lastTime = time;
 
         glUseProgram(program.getProgramID());
 
@@ -201,21 +189,24 @@ int main() {
         glUniform1i(glGetUniformLocation(program.getProgramID(), "texture1"), 0);
 
         //BINDING TRANSFORMATIONS
-        view = camera.getCameraTransform();
-        proj = glm::perspective(glm::radians(camera.zoom), float(WIDTH) / float(HEIGHT), 0.1f, 100.0f);
-
+        //glUniformMatrix4fv(modelULoc, 1, GL_FALSE, glm::value_ptr(model));
         glUniformMatrix4fv(viewULoc, 1, GL_FALSE, glm::value_ptr(view));
         glUniformMatrix4fv(projULoc, 1, GL_FALSE, glm::value_ptr(proj));
 
 
         glBindVertexArray(VAO);
-        for(int i = 0;i < 2; ++i) {
+        for(int i = 0;i < 10; ++i) {
+            //APPLYING TRANSFORMATIONS
             model = glm::mat4(1.0f);
-            model = glm::translate(model, cubesLocations[i]);
-            model = glm::rotate(model, glm::radians(i * 15.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+            model = glm::translate(model, glm::vec3(0.0f, 0.0f, i * 1.5f));
+            if( (i + 1) % 3 == 0)
+                model = glm::rotate(model, float(time) * glm::radians(i * 20.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
             glUniformMatrix4fv(modelULoc, 1, GL_FALSE, glm::value_ptr(model));
+
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
+        //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -232,14 +223,4 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 void processInput(GLFWwindow* window) {
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-    if(glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS)
-        camera.zoom -= deltaTime * 10;
-    if(glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS)
-        camera.zoom += deltaTime * 10;
-
-    camera.processKeyboard(window, deltaTime);
-}
-
-void cursorMovementCallback(GLFWwindow* window, double x, double y) {
-    camera.processMouse(window, x, y);
 }
