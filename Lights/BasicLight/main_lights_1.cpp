@@ -61,7 +61,7 @@ int main() {
 
 
     // SHADER PREPARING ------------------------------------------------------
-    Program program("Lights/Shaders/color_vertex.glsl", "Lights/Shaders/color_fragment.glsl");
+    Program program("Lights/Shaders/light_vertex.glsl", "Lights/Shaders/light_fragment.glsl");
     if(program.hasError()) {
         std::cout << program.getErrorMessage() << std::endl;
         return -1;
@@ -149,7 +149,8 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(sizeof(float) * 5));
     glEnableVertexAttribArray(0);
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -158,7 +159,7 @@ int main() {
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
 
@@ -172,9 +173,9 @@ int main() {
     glm::vec3 objectLocation = glm::vec3(0.0f, 0.0f, 0.0f);
     glm::vec3 objectColor = glm::vec3(1.0f, 0.5f, 0.33f);
 
-    glm::vec3 lightSourceLocation = glm::vec3(0.0f, 5.0f, -5.0f);
+    glm::vec3 lightSourceLocation = glm::vec3(0.0f, 0.0f, -3.0f);
     glm::vec3 lightSourceColor = glm::vec3(1.0f, 1.0f, 1.0f);
-    glm::vec3 ambientColor = glm::vec3(0.01f, 0.01f, 0.1f);
+    glm::vec3 ambientColor = glm::vec3(0.01f, 0.01f, 0.15f);
 
     // MISC ------------------------------------------------------------------
 
@@ -207,7 +208,7 @@ int main() {
 
         view = camera.getCameraTransform();
 
-        lightSourceColor = glm::vec3( (std::sin(time) + 1.0f) * 0.5f );
+        //lightSourceColor = glm::vec3( (std::sin(time) + 1.0f) * 0.5f );
 
         // ~~~~ RENDERING OBJECTS ~~~~
         glUseProgram(program.getProgramID());
@@ -216,11 +217,13 @@ int main() {
         glUniformMatrix4fv(projULoc, 1, GL_FALSE, glm::value_ptr(proj));
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "objectColor"), 1, glm::value_ptr(objectColor));
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "sourceColor"), 1, glm::value_ptr(lightSourceColor));
+        glUniform3fv(glGetUniformLocation(program.getProgramID(), "ambientColor"), 1, glm::value_ptr(ambientColor));
+        glUniform3fv(glGetUniformLocation(program.getProgramID(), "sourcePosition"), 1, glm::value_ptr(lightSourceLocation));
 
         glBindVertexArray(VAO);
         model = glm::mat4(1.0f);
         model = glm::translate(model, objectLocation);
-        model = glm::rotate(model, glm::radians(45.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
         glUniformMatrix4fv(modelULoc, 1, GL_FALSE, glm::value_ptr(model));
         glDrawArrays(GL_TRIANGLES, 0, 36);
 
