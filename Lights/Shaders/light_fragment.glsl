@@ -11,8 +11,11 @@ uniform vec3 ambientColor;
 uniform vec3 sourcePosition;
 
 void main() {
+    vec3 n = normalize(normal);
     vec3 l = normalize(sourcePosition - position);
-    vec3 diffuse = max(cos(dot(l, normal)), 0.0f) * objectColor * sourceColor;
+    float dist = distance(sourcePosition, position);
 
-    outColor = vec4(diffuse + ambientColor, 1.0f);
+    vec3 diffuse = objectColor * sourceColor * max(dot(n, l), 0.0f) * max(1.0f - min(dist/5.0f, 1.0f), 0.0f);
+
+    outColor = vec4(ambientColor + diffuse, 1.0f);
 }

@@ -152,6 +152,7 @@ int main() {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(sizeof(float) * 5));
     glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     glGenVertexArrays(1, &VAO2);
@@ -173,7 +174,7 @@ int main() {
     glm::vec3 objectLocation = glm::vec3(0.0f, 0.0f, 0.0f);
     glm::vec3 objectColor = glm::vec3(1.0f, 0.5f, 0.33f);
 
-    glm::vec3 lightSourceLocation = glm::vec3(0.0f, 0.0f, -3.0f);
+    glm::vec3 lightSourceLocation = glm::vec3(0.0f, 1.0f, -1.0f);
     glm::vec3 lightSourceColor = glm::vec3(1.0f, 1.0f, 1.0f);
     glm::vec3 ambientColor = glm::vec3(0.01f, 0.01f, 0.15f);
 
@@ -209,6 +210,7 @@ int main() {
         view = camera.getCameraTransform();
 
         //lightSourceColor = glm::vec3( (std::sin(time) + 1.0f) * 0.5f );
+        lightSourceLocation = glm::vec3(0.0f, (std::sin(time) + 1.0f) * 2.0f + 1.0f, -(std::sin(time) + 1.0f) * 2.0f);
 
         // ~~~~ RENDERING OBJECTS ~~~~
         glUseProgram(program.getProgramID());
@@ -223,7 +225,6 @@ int main() {
         glBindVertexArray(VAO);
         model = glm::mat4(1.0f);
         model = glm::translate(model, objectLocation);
-        model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
         glUniformMatrix4fv(modelULoc, 1, GL_FALSE, glm::value_ptr(model));
         glDrawArrays(GL_TRIANGLES, 0, 36);
 

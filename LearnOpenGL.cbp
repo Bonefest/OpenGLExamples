@@ -46,78 +46,20 @@
 		<Unit filename="../Dependecies/include/glad/glad.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Camera/main_camera_1.cpp" />
-		<Unit filename="Camera/main_camera_2.cpp">
+		<Unit filename="Lights/BasicLight/main_lights_1.cpp" />
+		<Unit filename="Lights/Colors/main_lights_1.cpp">
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="Coordinate Systems/main_coordinates_1.cpp">
+		<Unit filename="Lights/Colors/main_lights_2.cpp">
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="Coordinate Systems/main_coordinates_2.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
-		<Unit filename="HelloTriangle/main_hello_triangle_1.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
-		<Unit filename="HelloTriangle/main_hello_triangle_2.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
-		<Unit filename="HelloTriangle/main_hello_triangle_3.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
-		<Unit filename="Practice/Algorithms/1131.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
-		<Unit filename="Practice/Algorithms/1132.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
-		<Unit filename="Practice/Light/blinn_phong_light.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
+		<Unit filename="Lights/Shaders/color_fragment.glsl" />
+		<Unit filename="Lights/Shaders/color_vertex.glsl" />
 		<Unit filename="Practice/heightmap.h" />
-		<Unit filename="Practice/main_heightmap2d.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
-		<Unit filename="Practice/main_heightmap3d.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
-		<Unit filename="Practice/main_practice_projection.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
 		<Unit filename="Program.cpp" />
 		<Unit filename="Program.h" />
-		<Unit filename="Shaders/main_shaders_1.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
-		<Unit filename="Textures/main_textures_1.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
-		<Unit filename="Textures/main_textures_2.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
-		<Unit filename="Textures/main_textures_3.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
-		<Unit filename="Transofrmations/main_transformations_1.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
 		<Unit filename="camera.h" />
 		<Unit filename="main.cpp">
 			<Option compile="0" />

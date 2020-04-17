@@ -29,7 +29,7 @@ public:
         else if(direction == RIGHT)
             position += glm::cross(glm::normalize(front), up) * speed * dt;
 
-        position.y = 0;
+        //position.y = 0;
     }
 
     void processMouse(GLFWwindow* window, double x, double y) {
