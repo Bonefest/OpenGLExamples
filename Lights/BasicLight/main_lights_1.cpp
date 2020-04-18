@@ -175,8 +175,8 @@ int main() {
     glm::vec3 objectColor = glm::vec3(1.0f, 0.5f, 0.33f);
 
     glm::vec3 lightSourceLocation = glm::vec3(0.0f, 1.0f, -1.0f);
-    glm::vec3 lightSourceColor = glm::vec3(1.0f, 1.0f, 1.0f);
-    glm::vec3 ambientColor = glm::vec3(0.01f, 0.01f, 0.15f);
+    glm::vec3 lightSourceColor = glm::vec3(1.0f, 1.0f, 1.f);
+    float ambientFactor = 0.15f;
 
     // MISC ------------------------------------------------------------------
 
@@ -217,10 +217,11 @@ int main() {
 
         glUniformMatrix4fv(viewULoc, 1, GL_FALSE, glm::value_ptr(view));
         glUniformMatrix4fv(projULoc, 1, GL_FALSE, glm::value_ptr(proj));
+        glUniform1f(glGetUniformLocation(program.getProgramID(), "ambientFactor"), ambientFactor);
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "objectColor"), 1, glm::value_ptr(objectColor));
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "sourceColor"), 1, glm::value_ptr(lightSourceColor));
-        glUniform3fv(glGetUniformLocation(program.getProgramID(), "ambientColor"), 1, glm::value_ptr(ambientColor));
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "sourcePosition"), 1, glm::value_ptr(lightSourceLocation));
+        glUniform3fv(glGetUniformLocation(program.getProgramID(), "cameraPosition"), 1, glm::value_ptr(camera.position));
 
         glBindVertexArray(VAO);
         model = glm::mat4(1.0f);
