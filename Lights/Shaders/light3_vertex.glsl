@@ -26,6 +26,7 @@ void main() {
     vec3 d = normalize(2 * n * dot(n, l) - l);
 
 
+
     float dist = distance(sourcePosition, position);
 
     vec3 diffuse = objectColor * sourceColor * max(dot(n, l), 0.0f);

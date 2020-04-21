@@ -46,7 +46,18 @@
 		<Unit filename="../Dependecies/include/glad/glad.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Lights/BasicLight/main_lights_1.cpp" />
+		<Unit filename="Lights/BasicLight/main_lights_1.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="Lights/BasicLight/main_lights_2.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="Lights/BasicLight/main_lights_3.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="Lights/Colors/main_lights_1.cpp">
 			<Option compile="0" />
 			<Option link="0" />
@@ -55,6 +66,11 @@
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
+		<Unit filename="Lights/Materials/main_materials_1.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="Lights/Materials/main_materials_2.cpp" />
 		<Unit filename="Lights/Shaders/color_fragment.glsl" />
 		<Unit filename="Lights/Shaders/color_vertex.glsl" />
 		<Unit filename="Practice/heightmap.h" />
