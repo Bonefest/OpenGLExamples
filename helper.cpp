@@ -3,20 +3,18 @@
 
 #include <iostream>
 
-GLuint loadTexture(const std::string& path,
-                   GLint internalFormat, GLenum format,
-                   bool generateMipmap) {
+bool loadTexture(const std::string& path,
+                 unsigned int target,
+                 GLint internalFormat, GLenum format,
+                 bool generateMipmap) {
     int width, height, channels;
     unsigned char* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
     if(data == NULL) {
         std::cerr << "error!" << std::endl;
+        return false;
     }
 
-    std::cout << path << std::endl;
-
-    GLuint textureBuffer;
-    glGenBuffers(1, &textureBuffer);
-    glBindBuffer(GL_TEXTURE_2D, textureBuffer);
+    glBindTexture(GL_TEXTURE_2D, target);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -28,9 +26,7 @@ GLuint loadTexture(const std::string& path,
         glGenerateMipmap(GL_TEXTURE_2D);
     }
 
-    glBindBuffer(GL_TEXTURE_2D, 0);
+    stbi_image_free(data);
 
-    //stbi_image_free(data);
-
-    return textureBuffer;
+    return true;
 }

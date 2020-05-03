@@ -75,46 +75,20 @@ int main() {
 
     // TEXTURE LOADING -------------------------------------------------------
 
-             // FILE LOADING
-    int width, height, channels, width2, height2, channels2;
+    unsigned int textures[2];
+    glGenTextures(2, textures);
 
-    stbi_set_flip_vertically_on_load(true);
-    unsigned char* texData = stbi_load("Resources/container.png", &width, &height, &channels, 0);
-    if(!texData) {
-        std::cout << "Unabled to load texture data!\n";
+
+
+    if(!loadTexture("Resources/container.png", textures[0], GL_RGBA, GL_RGBA, true)) {
         return -1;
     }
 
-    unsigned char* texData2 = stbi_load("Resources/container2.jpg", &width2, &height2, &channels2, 0);
-    if(!texData2) {
-        std::cout << "Unable to load texture data!\n";
+    if(!loadTexture("Resources/container2.jpg", textures[1], GL_RGB, GL_RGB, true)) {
         return -1;
     }
 
-        // IMPORTING TEXTURE TO TEXTURE OBJECT
-    unsigned int texids[2];
-    glGenTextures(2, texids);
-    glBindTexture(GL_TEXTURE_2D, texids[0]);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
-    glGenerateMipmap(GL_TEXTURE_2D);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    glBindTexture(GL_TEXTURE_2D, texids[1]);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width2, height2, 0, GL_RGB, GL_UNSIGNED_BYTE, texData2);
-    glGenerateMipmap(GL_TEXTURE_2D);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-
-    stbi_image_free(texData);
-    stbi_image_free(texData2);
 
 
     // DATA PREPARING  -------------------------------------------------------
@@ -246,10 +220,10 @@ int main() {
         glUseProgram(program.getProgramID());
 
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texids[0]);
+        glBindTexture(GL_TEXTURE_2D, textures[0]);
 
         glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, texids[1]);
+        glBindTexture(GL_TEXTURE_2D, textures[1]);
 
         glUniformMatrix4fv(viewULoc, 1, GL_FALSE, glm::value_ptr(view));
         glUniformMatrix4fv(projULoc, 1, GL_FALSE, glm::value_ptr(proj));

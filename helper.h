@@ -6,8 +6,9 @@
 
 #include <string>
 
-GLuint loadTexture(const std::string& path,
-                   GLint internalFormat, GLenum format,
-                   bool generateMipmap = true);
+bool loadTexture(const std::string& path,
+                 unsigned int target,
+                 GLint internalFormat, GLenum format,
+                 bool generateMipmap = true);
 
 #endif // HELPER_H_INCLUDED
