@@ -1192,3 +1192,38 @@
 	<glm/gtc/type_ptr.hpp>
 	"camera.h"
 
+1588507633 source:/home/miofix/Programming/Graphics/LearnOpenGL/Lights/LightsMaps/main_lm_1.cpp
+	<iostream>
+	<cmath>
+	<glad/glad.h>
+	<GLFW/glfw3.h>
+	"Program.h"
+	"stb_image.h"
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"camera.h"
+
+1588510508 source:/home/miofix/Programming/Graphics/LearnOpenGL/helper.cpp
+	"helper.h"
+	"stb_image.h"
+	<iostream>
+
+1588508490 /home/miofix/Programming/Graphics/LearnOpenGL/helper.h
+	<glad/glad.h>
+	<GLFW/glfw3.h>
+	<string>
+
+1588511115 source:/home/miofix/Programming/Graphics/LearnOpenGL/Lights/LightsMaps/main_lm_with_ambient_textures.cpp
+	<iostream>
+	<cmath>
+	<glad/glad.h>
+	<GLFW/glfw3.h>
+	"Program.h"
+	"stb_image.h"
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"camera.h"
+	"helper.h"
+
