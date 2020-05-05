@@ -62,7 +62,7 @@ int main() {
 
 
     // SHADER PREPARING ------------------------------------------------------
-    Program program("Lights/Shaders/lm_vertex.glsl", "Lights/Shaders/lm_fragment3.glsl");
+    Program program("Lights/Shaders/lm_vertex.glsl", "Lights/Shaders/lm_fragment4.glsl");
     if(program.hasError()) {
         std::cout << program.getErrorMessage() << std::endl;
         return -1;
@@ -241,8 +241,8 @@ int main() {
 
         glUniformMatrix4fv(viewULoc, 1, GL_FALSE, glm::value_ptr(view));
         glUniformMatrix4fv(projULoc, 1, GL_FALSE, glm::value_ptr(proj));
+        glUniform1f(glGetUniformLocation(program.getProgramID(), "time"), glfwGetTime());
         glUniform1f(glGetUniformLocation(program.getProgramID(), "material.shininess"), objectShininess);
-
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "light.ambient"), 1, glm::value_ptr(lightSourceAmbientColor));
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "light.diffuse"), 1, glm::value_ptr(lightSourceDiffuseColor));
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "light.specular"), 1, glm::value_ptr(lightSourceSpecularColor));
