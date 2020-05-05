@@ -46,7 +46,7 @@ void main() {
     vec3 specularColor = vec3(texture(material.specular, texPos));
     vec3 emissionColor = vec3(0, 0, 0);
     if(specularColor == vec3(0, 0, 0)) {
-        emissionColor = vec3(texture(material.emission, texPos + vec2(sin(time), 0))).brg * (sin(4 * time) + 1.5) * 2;  //Thanks to .brg we move green to blue and as result change our emission color blue
+        emissionColor = vec3(texture(material.emission, texPos + vec2(sin(time), 0))).ggg * (sin(4 * time) + 1.5) * 2;  //Thanks to .brg we move green to blue and as result change our emission color blue
     }
 
     vec3 light_diffuse = (light.diffuse + emissionColor);
