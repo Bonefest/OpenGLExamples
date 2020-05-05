@@ -62,7 +62,7 @@ int main() {
 
 
     // SHADER PREPARING ------------------------------------------------------
-    Program program("Lights/Shaders/lm_vertex.glsl", "Lights/Shaders/lm_fragment.glsl");
+    Program program("Lights/Shaders/lm_vertex.glsl", "Lights/Shaders/lm_fragment3.glsl");
     if(program.hasError()) {
         std::cout << program.getErrorMessage() << std::endl;
         return -1;
@@ -76,14 +76,19 @@ int main() {
 
     // TEXTURE LOADING -------------------------------------------------------
 
-    unsigned int textureDiffuse, textureSpecular;
+    unsigned int textureDiffuse, textureSpecular, textureEmission;
     glGenTextures(1, &textureDiffuse);
     if(!loadTexture("Resources/container.png", textureDiffuse, GL_RGBA, GL_RGBA, true)) {
         return -1;
     }
 
     glGenTextures(1, &textureSpecular);
-    if(!loadTexture("Resources/container_specular2.png", textureSpecular, GL_RGBA, GL_RGBA, true)) {
+    if(!loadTexture("Resources/container_specular.png", textureSpecular, GL_RGBA, GL_RGBA, true)) {
+        return -1;
+    }
+
+    glGenTextures(1, &textureEmission);
+    if(!loadTexture("Resources/matrix.jpg", textureEmission, GL_RGB, GL_RGB, true)) {
         return -1;
     }
 
@@ -202,6 +207,7 @@ int main() {
 
     glUniform1i(glGetUniformLocation(program.getProgramID(), "material.diffuse"), 0);
     glUniform1i(glGetUniformLocation(program.getProgramID(), "material.specular"), 1);
+    glUniform1i(glGetUniformLocation(program.getProgramID(), "material.emission"), 2);
 
 
 
@@ -228,6 +234,10 @@ int main() {
 
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, textureSpecular);
+
+        glActiveTexture(GL_TEXTURE2);
+        glBindTexture(GL_TEXTURE_2D, textureEmission);
+
 
         glUniformMatrix4fv(viewULoc, 1, GL_FALSE, glm::value_ptr(view));
         glUniformMatrix4fv(projULoc, 1, GL_FALSE, glm::value_ptr(proj));

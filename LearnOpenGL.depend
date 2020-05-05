@@ -1227,3 +1227,16 @@
 	"camera.h"
 	"helper.h"
 
+1588698628 source:/home/miofix/Programming/Graphics/LearnOpenGL/Lights/LightsMaps/main_lm_2.cpp
+	<iostream>
+	<cmath>
+	<glad/glad.h>
+	<GLFW/glfw3.h>
+	"Program.h"
+	"stb_image.h"
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"camera.h"
+	"helper.h"
+
