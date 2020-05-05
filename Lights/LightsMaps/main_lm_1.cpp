@@ -12,6 +12,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "camera.h"
+#include "helper.h"
 
 #define WIDTH 640
 #define HEIGHT 480
@@ -75,25 +76,17 @@ int main() {
 
     // TEXTURE LOADING -------------------------------------------------------
 
-    int width, height, channels;
-    unsigned char* data = stbi_load("Resources/container.png", &width, &height, &channels, 0);
-    if(data == NULL) {
+    unsigned int textureDiffuse, textureSpecular;
+    glGenTextures(1, &textureDiffuse);
+    if(!loadTexture("Resources/container.png", textureDiffuse, GL_RGBA, GL_RGBA, true)) {
         return -1;
     }
 
-    unsigned int textureObject;
-    glGenBuffers(1, &textureObject);
-    glBindBuffer(GL_TEXTURE_2D, textureObject);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-    glGenerateMipmap(GL_TEXTURE_2D);
+    glGenTextures(1, &textureSpecular);
+    if(!loadTexture("Resources/container_specular.png", textureSpecular, GL_RGBA, GL_RGBA, true)) {
+        return -1;
+    }
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-
-    stbi_image_free(data);
 
     // DATA PREPARING  -------------------------------------------------------
     float positions[] = {
@@ -178,7 +171,7 @@ int main() {
     glm::vec3 objectLocation = glm::vec3(0.0f, 0.0f, 0.0f);
     //DEPRECATED glm::vec3 objectAmbientColor = glm::vec3(1.0f, 0.5f, 0.33f);
     //DEPRECATED glm::vec3 objectDiffuseColor = glm::vec3(1.0f, 0.5f, 0.33f);
-    glm::vec3 objectSpecularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+    //DEPRECATED glm::vec3 objectSpecularColor = glm::vec3(1.0f, 1.0f, 1.0f);
     float objectShininess = 16.0f;
 
     glm::vec3 lightSourceLocation = glm::vec3(0.0f, 1.0f, -1.0f);
@@ -205,6 +198,13 @@ int main() {
     glEnable(GL_DEPTH_TEST);
     glClearColor(0.73f, 0.88f, 0.98f, 1.0f);
 
+    glUseProgram(program.getProgramID());
+
+    glUniform1i(glGetUniformLocation(program.getProgramID(), "material.diffuse"), 0);
+    glUniform1i(glGetUniformLocation(program.getProgramID(), "material.specular"), 1);
+
+
+
     while(!glfwWindowShouldClose(window)) {
         processInput(window);
 
@@ -218,18 +218,19 @@ int main() {
         view = camera.getCameraTransform();
 
         //lightSourceColor = glm::vec3( (std::sin(time) + 1.0f) * 0.5f );
-        lightSourceLocation = glm::vec3(0.0f, (std::sin(time) + 1.0f) * 2.0f + 1.0f, -(std::sin(time) + 1.0f) * 2.0f);
+        //lightSourceLocation = glm::vec3(0.0f, (std::sin(time) + 1.0f) * 2.0f + 1.0f, -(std::sin(time) + 1.0f) * 2.0f);
 
         // ~~~~ RENDERING OBJECTS ~~~~
         glUseProgram(program.getProgramID());
 
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, textureObject);
+        glBindTexture(GL_TEXTURE_2D, textureDiffuse);
+
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, textureSpecular);
 
         glUniformMatrix4fv(viewULoc, 1, GL_FALSE, glm::value_ptr(view));
         glUniformMatrix4fv(projULoc, 1, GL_FALSE, glm::value_ptr(proj));
-        glUniform1i(glGetUniformLocation(program.getProgramID(), "material.diffuse"), 0);
-        glUniform3fv(glGetUniformLocation(program.getProgramID(), "material.specular"), 1, glm::value_ptr(objectSpecularColor));
         glUniform1f(glGetUniformLocation(program.getProgramID(), "material.shininess"), objectShininess);
 
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "light.ambient"), 1, glm::value_ptr(lightSourceAmbientColor));
