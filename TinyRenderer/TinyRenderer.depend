@@ -10,3 +10,18 @@
 1588705885 /home/miofix/Programming/Graphics/LearnOpenGL/TinyRenderer/Dependencies/tga.h
 	<fstream>
 
+1588710778 source:/home/miofix/Programming/Graphics/LearnOpenGL/TinyRenderer/Dependencies/model.cpp
+	<iostream>
+	<string>
+	<fstream>
+	<sstream>
+	<vector>
+	"model.h"
+
+1588710749 /home/miofix/Programming/Graphics/LearnOpenGL/TinyRenderer/Dependencies/model.h
+	<vector>
+	"geometry.h"
+
+1588710713 /home/miofix/Programming/Graphics/LearnOpenGL/TinyRenderer/Dependencies/geometry.h
+	<cmath>
+

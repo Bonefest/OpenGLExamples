@@ -2,19 +2,15 @@
 #include <cmath>
 
 #include "Dependencies/tga.h"
+#include "Dependencies/model.h"
+
+const int WIDTH = 4096;
+const int HEIGHT = 4096;
 
 const TGAColor white = TGAColor(255, 255, 255, 255);
 const TGAColor red = TGAColor(255, 0, 0, 255);
 
-void line_one(TGAImage& image, int x0, int y0, int x1, int y1, TGAColor color) {
-    for(float t = 0.0f; t < 1.0f; t += .01f) {
-        int x = x0 + t * (x1 - x0);
-        int y = y0 + t * (y1 - y0);
-        image.set(x, y, color);
-    }
-}
-
-void line_two(TGAImage& image, int x0, int y0, int x1, int y1, TGAColor color) {
+void line(TGAImage& image, int x0, int y0, int x1, int y1, TGAColor color) {
     bool steer = false;
     if(std::abs(x1-x0) < std::abs(y1 - y0)) {
         std::swap(x0, y0);
@@ -42,19 +38,24 @@ void line_two(TGAImage& image, int x0, int y0, int x1, int y1, TGAColor color) {
 }
 
 int main(int argc, char** argv) {
-    TGAImage image(100, 100, TGAImage::RGB);
+    TGAImage image(WIDTH, HEIGHT, TGAImage::RGB);
+    Model model("data/head.obj");
+    std::cout << model.nfaces() << " " << model.nverts() << std::endl;
+    for(int i = 0; i < model.nfaces(); ++i) {
+        auto face = model.face(i);
+        for(int j = 0;j < 3; ++j) {
+            auto v1 = model.vert(face[j]);
+            auto v2 = model.vert(face[(j + 1) % 3]);
 
-    int center_x = 50;
-    int center_y = 50;
+            int x0 = (v1.x + 1.0f) * 0.5f * WIDTH;
+            int y0 = (v1.y + 1.0f) * 0.5f * HEIGHT;
 
-    int n = 4096;
-    float angle_step = (2 * M_PI) / n;
+            int x1 = (v2.x + 1.0f) * 0.5f * WIDTH;
+            int y1 = (v2.y + 1.0f) * 0.5f * HEIGHT;
 
-    for(int i = 0;i < n;i++) {
-        int x = std::cos(i * angle_step) * 20;
-        int y = std::sin(i * angle_step) * 20;
+            line(image, x0, y0, x1, y1, white);
+        }
 
-        line_two(image, center_x, center_y, center_x + x, center_y + y, white);
     }
 
     image.flip_vertically();
