@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1588706258 source:/home/miofix/Programming/Graphics/LearnOpenGL/TinyRenderer/Dependencies/tga.cpp
+	<iostream>
+	<fstream>
+	<string.h>
+	<time.h>
+	<math.h>
+	"tga.h"
+
+1588705885 /home/miofix/Programming/Graphics/LearnOpenGL/TinyRenderer/Dependencies/tga.h
+	<fstream>
+

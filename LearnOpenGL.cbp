@@ -66,11 +66,19 @@
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
+		<Unit filename="Lights/LightCasters/main_lc_1.cpp" />
 		<Unit filename="Lights/LightsMaps/main_lm_1.cpp">
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="Lights/LightsMaps/main_lm_with_ambient_textures.cpp" />
+		<Unit filename="Lights/LightsMaps/main_lm_2.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="Lights/LightsMaps/main_lm_with_ambient_textures.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="Lights/Materials/main_materials_1.cpp">
 			<Option compile="0" />
 			<Option link="0" />
