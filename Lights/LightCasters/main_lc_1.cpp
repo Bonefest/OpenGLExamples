@@ -63,7 +63,7 @@ int main() {
 
 
     // SHADER PREPARING ------------------------------------------------------
-    Program program("Lights/Shaders/lc_vertex.glsl", "Lights/Shaders/lc_fragment.glsl");
+    Program program("Lights/Shaders/lc_vertex.glsl", "Lights/Shaders/lc_spotlight_fragment.glsl");
     if(program.hasError()) {
         std::cout << program.getErrorMessage() << std::endl;
         return -1;
@@ -176,12 +176,17 @@ int main() {
 
     float objectShininess = 16.0f;
 
-    glm::vec3 lightSourceLocation = glm::vec3(0.0f, 2.0f, -0.0f);
     glm::vec3 lightSourceAmbientColor = glm::vec3(0.1f, 0.1f, 0.1f);
     glm::vec3 lightSourceDiffuseColor = glm::vec3(1.0f, 1.0f, 1.0f);
     glm::vec3 lightSourceSpecularColor = glm::vec3(1.0f, 1.0f, 1.0f);
 
-    glm::vec3 lightDirection = glm::vec3(-0.2f, -1.0f, 0.0f);
+    glm::vec3 spotlightDirection = glm::vec3(1.0f, 0.0f, 0.0f);
+    glm::vec3 spotlightPosition = glm::vec3(0.0f, 1.0f, 2.0f);
+    float spotlightAngle = 25.0f;
+
+    //Light source location for point light (w = 1.0f)
+    //and light direction for directional light (w = 0.0f)
+    glm::vec4 lightVector = glm::vec4(-0.2f, -1.0f, 0.0f, 0.0f);
 
     // CUBES INFORMATION -----------------------------------------------------
 
@@ -231,8 +236,13 @@ int main() {
         view = camera.getCameraTransform();
 
         //lightSourceColor = glm::vec3( (std::sin(time) + 1.0f) * 0.5f );
-        //lightSourceLocation = glm::vec3(0.0f, (std::sin(time) + 1.0f) * 2.0f + 1.0f, -(std::sin(time) + 1.0f) * 2.0f);
-        lightDirection = glm::vec3(0, std::sin(time * 0.1f), std::cos(time * 0.1f));
+        //lightVector = glm::vec4(std::cos(time) * 3.0f, 1.0f, std::sin(time) * 3.0f, 1.0f);
+        //lightVector = glm::vec4(0, std::sin(time * 0.1f), std::cos(time * 0.1f), 0.0f);
+
+        spotlightPosition = camera.position;
+        spotlightDirection = camera.getCameraDirection();
+
+        std::cout << camera.getCameraDirection().x << " " << camera.getCameraDirection().y << " " << camera.getCameraDirection().z << std::endl;
 
         // ~~~~ RENDERING OBJECTS ~~~~
         glUseProgram(program.getProgramID());
@@ -245,13 +255,24 @@ int main() {
 
         glUniformMatrix4fv(viewULoc, 1, GL_FALSE, glm::value_ptr(view));
         glUniformMatrix4fv(projULoc, 1, GL_FALSE, glm::value_ptr(proj));
+
         glUniform1f(glGetUniformLocation(program.getProgramID(), "material.shininess"), objectShininess);
+        glUniform1f(glGetUniformLocation(program.getProgramID(), "light.constant"), 1.0f);
+        glUniform1f(glGetUniformLocation(program.getProgramID(), "light.linear"), 0.14f);
+        glUniform1f(glGetUniformLocation(program.getProgramID(), "light.quadratic"), 0.07f);
 
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "light.ambient"), 1, glm::value_ptr(lightSourceAmbientColor));
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "light.diffuse"), 1, glm::value_ptr(lightSourceDiffuseColor));
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "light.specular"), 1, glm::value_ptr(lightSourceSpecularColor));
-        glUniform3fv(glGetUniformLocation(program.getProgramID(), "light.direction"), 1, glm::value_ptr(lightDirection));
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "cameraPosition"), 1, glm::value_ptr(camera.position));
+
+        glUniform4fv(glGetUniformLocation(program.getProgramID(), "light.vector"), 1, glm::value_ptr(lightVector));
+
+        // Spotlight
+
+        glUniform3fv(glGetUniformLocation(program.getProgramID(), "light.position"), 1, glm::value_ptr(spotlightPosition));
+        glUniform3fv(glGetUniformLocation(program.getProgramID(), "light.direction"), 1, glm::value_ptr(spotlightDirection));
+        glUniform1f(glGetUniformLocation(program.getProgramID(), "light.maxAngle"), spotlightAngle);
 
         glBindVertexArray(VAO);
 
@@ -273,7 +294,7 @@ int main() {
         glUseProgram(lightProgram.getProgramID());
 
         model = glm::mat4(1.0f);
-        model = glm::translate(model, lightSourceLocation);
+        model = glm::translate(model, glm::vec3(lightVector));
         model = glm::scale(model, glm::vec3(0.2f));
 
         glUniformMatrix4fv(lightModelULoc, 1, GL_FALSE, glm::value_ptr(model));

@@ -32,6 +32,11 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Dependencies/geometry.h" />
+		<Unit filename="Dependencies/model.cpp" />
+		<Unit filename="Dependencies/model.h" />
+		<Unit filename="Dependencies/tga.cpp" />
+		<Unit filename="Dependencies/tga.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<envvars />

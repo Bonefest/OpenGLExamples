@@ -4,8 +4,8 @@
 #include "Dependencies/tga.h"
 #include "Dependencies/model.h"
 
-const int WIDTH = 4096;
-const int HEIGHT = 4096;
+const int WIDTH = 128;
+const int HEIGHT = 128;
 
 const TGAColor white = TGAColor(255, 255, 255, 255);
 const TGAColor red = TGAColor(255, 0, 0, 255);

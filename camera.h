@@ -50,6 +50,10 @@ public:
         return glm::lookAt(position, position + front, up);
     }
 
+    glm::vec3 getCameraDirection() const {
+        return front;
+    }
+
     glm::vec3 position;
 
     float yaw;

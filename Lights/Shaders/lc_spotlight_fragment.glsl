@@ -17,7 +17,10 @@ struct Light {
     vec3 diffuse;
     vec3 specular;
 
-    vec4 vector;
+    vec3 position;
+    vec3 direction;
+
+    float maxAngle;
 
     float constant;
     float linear;
@@ -33,18 +36,18 @@ void main() {
 
     vec3 n = normalize(normal);
 
-    vec3 l;
-    float attenuation = 1.0f;
+    vec3 l = normalize(light.position - position);
+    vec3 ld = normalize(-light.direction);
 
-    //If we are dealing with directional light
-    if(light.vector.w < 0.01f) {
-        //vec3 l = normalize(light.position - position); - inside direction light l is constant and passes through uniform!
-        l = normalize(vec3(-light.vector));
-    } else {
-        float dist = distance(position, vec3(light.vector));
-        l = normalize(vec3(light.vector) - position);
+    float angle = degrees(acos(dot(l, ld)));
+
+    float attenuation = 0.0f;
+    if(angle < light.maxAngle) {
+        float dist = distance(light.position, position);
         attenuation = 1.0f / (light.constant + light.linear * dist + light.quadratic * dist * dist);
+        attenuation *= 1.0f - angle / light.maxAngle;
     }
+
     vec3 e = normalize(cameraPosition - position);
     vec3 d = normalize(2 * n * dot(n, l) - l);
 
