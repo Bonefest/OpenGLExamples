@@ -182,7 +182,8 @@ int main() {
 
     glm::vec3 spotlightDirection = glm::vec3(1.0f, 0.0f, 0.0f);
     glm::vec3 spotlightPosition = glm::vec3(0.0f, 1.0f, 2.0f);
-    float spotlightAngle = 25.0f;
+    float spotlightInnerAngle = 12.5f;
+    float spotlightOuterAngle = 18.5f;
 
     //Light source location for point light (w = 1.0f)
     //and light direction for directional light (w = 0.0f)
@@ -272,7 +273,8 @@ int main() {
 
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "light.position"), 1, glm::value_ptr(spotlightPosition));
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "light.direction"), 1, glm::value_ptr(spotlightDirection));
-        glUniform1f(glGetUniformLocation(program.getProgramID(), "light.maxAngle"), spotlightAngle);
+        glUniform1f(glGetUniformLocation(program.getProgramID(), "light.innerAngle"), std::cos(glm::radians(spotlightInnerAngle)));
+        glUniform1f(glGetUniformLocation(program.getProgramID(), "light.outerAngle"), std::cos(glm::radians(spotlightOuterAngle)));
 
         glBindVertexArray(VAO);
 
