@@ -180,6 +180,13 @@ int main() {
 
     glm::vec3 dirLightDirection(0.707f, -0.707f, 0.0f);
 
+    // Point lights
+    glm::vec3 pointLightPositions[4] = {
+        glm::vec3( 0.0f, 3.0f, 0.0f),
+        glm::vec3( 3.0f, 3.0f, 0.0f),
+        glm::vec3(-3.0f, 3.0f, 0.0f),
+        glm::vec3( 0.0f, 3.0f, 3.0f)
+    };
 
     glm::vec3 lightSourceAmbientColor = glm::vec3(0.1f, 0.1f, 0.1f);
     glm::vec3 lightSourceDiffuseColor = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -189,10 +196,6 @@ int main() {
     glm::vec3 spotlightPosition = glm::vec3(0.0f, 1.0f, 2.0f);
     float spotlightInnerAngle = 12.5f;
     float spotlightOuterAngle = 18.5f;
-
-    //Light source location for point light (w = 1.0f)
-    //and light direction for directional light (w = 0.0f)
-    glm::vec4 lightVector = glm::vec4(-0.2f, -1.0f, 0.0f, 0.0f);
 
     // CUBES INFORMATION -----------------------------------------------------
 
@@ -263,23 +266,41 @@ int main() {
         glUniformMatrix4fv(projULoc, 1, GL_FALSE, glm::value_ptr(proj));
 
         glUniform1f(glGetUniformLocation(program.getProgramID(), "material.shininess"), objectShininess);
+
+        //Directional light
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "dirLight.direction"), 1, glm::value_ptr(dirLightDirection));
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "dirLight.light.ambient"), 1, glm::value_ptr(lightSourceAmbientColor));
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "dirLight.light.diffuse"), 1, glm::value_ptr(lightSourceDiffuseColor));
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "dirLight.light.specular"), 1, glm::value_ptr(lightSourceSpecularColor));
-//        glUniform1f(glGetUniformLocation(program.getProgramID(), "light.constant"), 1.0f);
-//        glUniform1f(glGetUniformLocation(program.getProgramID(), "light.linear"), 0.14f);
-//        glUniform1f(glGetUniformLocation(program.getProgramID(), "light.quadratic"), 0.07f);
-//
-//        glUniform3fv(glGetUniformLocation(program.getProgramID(), "light.ambient"), 1, glm::value_ptr(lightSourceAmbientColor));
-//        glUniform3fv(glGetUniformLocation(program.getProgramID(), "light.diffuse"), 1, glm::value_ptr(lightSourceDiffuseColor));
-//        glUniform3fv(glGetUniformLocation(program.getProgramID(), "light.specular"), 1, glm::value_ptr(lightSourceSpecularColor));
+
+        //Point lights
+        for(int i = 0;i < 4; ++i) {
+            char format[64]{};
+            sprintf(format, "pointLights[%d].position", i);
+            glUniform3fv(glGetUniformLocation(program.getProgramID(), format), 1, glm::value_ptr(pointLightPositions[i]));
+
+            sprintf(format, "pointLights[%d].light.ambient", i);
+            glUniform3fv(glGetUniformLocation(program.getProgramID(), format), 1, glm::value_ptr(lightSourceAmbientColor));
+
+            sprintf(format, "pointLights[%d].light.diffuse", i);
+            glUniform3fv(glGetUniformLocation(program.getProgramID(), format), 1, glm::value_ptr(lightSourceDiffuseColor));
+
+            sprintf(format, "pointLights[%d].light.specular", i);
+            glUniform3fv(glGetUniformLocation(program.getProgramID(), format), 1, glm::value_ptr(lightSourceSpecularColor));
+
+            sprintf(format, "pointLights[%d].constant", i);
+            glUniform1f(glGetUniformLocation(program.getProgramID(), format), 1.0f);
+
+            sprintf(format, "pointLights[%d].linear", i);
+            glUniform1f(glGetUniformLocation(program.getProgramID(), format), 0.14f);
+
+            sprintf(format, "pointLights[%d].quadratic", i);
+            glUniform1f(glGetUniformLocation(program.getProgramID(), format), 0.07f);
+        }
+
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "cameraPosition"), 1, glm::value_ptr(camera.position));
 
-        glUniform4fv(glGetUniformLocation(program.getProgramID(), "light.vector"), 1, glm::value_ptr(lightVector));
-
-        // Spotlight
-
+        //Spotlight
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "light.position"), 1, glm::value_ptr(spotlightPosition));
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "light.direction"), 1, glm::value_ptr(spotlightDirection));
         glUniform1f(glGetUniformLocation(program.getProgramID(), "light.innerAngle"), std::cos(glm::radians(spotlightInnerAngle)));
@@ -304,17 +325,22 @@ int main() {
         // ~~~~ RENDERING LIGHTS SOURCES ~~~~
         glUseProgram(lightProgram.getProgramID());
 
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(lightVector));
-        model = glm::scale(model, glm::vec3(0.2f));
-
-        glUniformMatrix4fv(lightModelULoc, 1, GL_FALSE, glm::value_ptr(model));
         glUniformMatrix4fv(lightViewULoc, 1, GL_FALSE, glm::value_ptr(view));
         glUniformMatrix4fv(lightProjULoc, 1, GL_FALSE, glm::value_ptr(proj));
-        glUniform3fv(glGetUniformLocation(lightProgram.getProgramID(), "sourceColor"), 1, glm::value_ptr(lightSourceDiffuseColor));
 
         glBindVertexArray(VAO2);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+
+        // Rendering point lights only!
+        for(int i = 0;i < 4; ++i) {
+            model = glm::mat4(1.0f);
+            model = glm::translate(model, glm::vec3(pointLightPositions[i]));
+            model = glm::scale(model, glm::vec3(0.2f));
+
+            glUniformMatrix4fv(lightModelULoc, 1, GL_FALSE, glm::value_ptr(model));
+            glUniform3fv(glGetUniformLocation(lightProgram.getProgramID(), "sourceColor"), 1, glm::value_ptr(lightSourceDiffuseColor));
+
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
 
         glfwSwapBuffers(window);
         glfwPollEvents();

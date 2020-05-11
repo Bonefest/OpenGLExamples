@@ -84,14 +84,19 @@ vec3 calculateDirectionalLight(vec3 diffuse, vec3 specular, vec3 n, vec3 e) {
     return light.diffuse + light.specular + light.ambient;
 }
 
-vec3 calculatePointLight(vec3 diffuse, vec3 specular, vec3 n, vec3 e) {
-    for(int i = 0;i < 4; ++i) {
+vec3 calculatePointLights(vec3 diffuse, vec3 specular, vec3 n, vec3 e) {
+    vec3 totalColor = vec3(0, 0, 0);
+    for(int i = 0;i < 1; ++i) {
         vec3 l = pointLights[i].position - position;
+        Light light = calculateLight(pointLights[i].light, diffuse, specular, n, e, l);
 
+        float dist = length(l);
+        float attenuation = 1.0f / (pointLights[i].constant + pointLights[i].linear * dist + pointLights[i].quadratic * dist * dist);
 
+        totalColor += light.ambient + (light.diffuse + light.specular) * attenuation;
     }
 
-    return vec3(0, 0, 0);
+    return totalColor;
 }
 
 void main() {
@@ -101,5 +106,6 @@ void main() {
     vec3 diffuse = vec3(texture(material.diffuse, texPos));
     vec3 specular = vec3(texture(material.specular, texPos));
 
-    outColor = vec4(calculateDirectionalLight(diffuse, specular, n, e), 1.0f);
+    outColor = vec4(calculateDirectionalLight(diffuse, specular, n, e) +
+                    calculatePointLights(diffuse, specular, n, e), 1.0f);
 }
