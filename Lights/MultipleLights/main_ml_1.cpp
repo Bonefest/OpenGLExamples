@@ -185,7 +185,7 @@ int main() {
         glm::vec3( 0.0f, 3.0f, 0.0f),
         glm::vec3( 3.0f, 3.0f, 0.0f),
         glm::vec3(-3.0f, 3.0f, 0.0f),
-        glm::vec3( 0.0f, 3.0f, 3.0f)
+        glm::vec3( 0.0f, 3.0f, 0.0f)
     };
 
     glm::vec3 lightSourceAmbientColor = glm::vec3(0.1f, 0.1f, 0.1f);
@@ -244,9 +244,10 @@ int main() {
 
         view = camera.getCameraTransform();
 
-        //lightSourceColor = glm::vec3( (std::sin(time) + 1.0f) * 0.5f );
-        //lightVector = glm::vec4(std::cos(time) * 3.0f, 1.0f, std::sin(time) * 3.0f, 1.0f);
-        //lightVector = glm::vec4(0, std::sin(time * 0.1f), std::cos(time * 0.1f), 0.0f);
+
+        pointLightPositions[0] = glm::vec3(std::cos(time) * 5.0f, 0.0f, std::sin(time) * 5.0f);
+        pointLightPositions[1] = glm::vec3(std::cos(time) * 5.0f, std::sin(time) * 5.0f, 0.0f);
+        pointLightPositions[2] = glm::vec3(0.0f, std::cos(time) * 5.0f, std::sin(time) * 5.0f);
 
         spotlightPosition = camera.position;
         spotlightDirection = camera.getCameraDirection();
@@ -301,10 +302,18 @@ int main() {
         glUniform3fv(glGetUniformLocation(program.getProgramID(), "cameraPosition"), 1, glm::value_ptr(camera.position));
 
         //Spotlight
-        glUniform3fv(glGetUniformLocation(program.getProgramID(), "light.position"), 1, glm::value_ptr(spotlightPosition));
-        glUniform3fv(glGetUniformLocation(program.getProgramID(), "light.direction"), 1, glm::value_ptr(spotlightDirection));
-        glUniform1f(glGetUniformLocation(program.getProgramID(), "light.innerAngle"), std::cos(glm::radians(spotlightInnerAngle)));
-        glUniform1f(glGetUniformLocation(program.getProgramID(), "light.outerAngle"), std::cos(glm::radians(spotlightOuterAngle)));
+        glUniform3fv(glGetUniformLocation(program.getProgramID(), "spotlight.position"), 1, glm::value_ptr(camera.position));
+        glUniform3fv(glGetUniformLocation(program.getProgramID(), "spotlight.direction"), 1, glm::value_ptr(camera.getCameraDirection()));
+        glUniform1f(glGetUniformLocation(program.getProgramID(), "spotlight.innerAngle"), std::cos(glm::radians(spotlightInnerAngle)));
+        glUniform1f(glGetUniformLocation(program.getProgramID(), "spotlight.outerAngle"), std::cos(glm::radians(spotlightOuterAngle)));
+
+        glUniform3fv(glGetUniformLocation(program.getProgramID(), "spotlight.light.ambient"), 1, glm::value_ptr(lightSourceAmbientColor));
+        glUniform3fv(glGetUniformLocation(program.getProgramID(), "spotlight.light.diffuse"), 1, glm::value_ptr(lightSourceDiffuseColor));
+        glUniform3fv(glGetUniformLocation(program.getProgramID(), "spotlight.light.specular"), 1, glm::value_ptr(lightSourceSpecularColor));
+
+        glUniform1f(glGetUniformLocation(program.getProgramID(), "spotlight.constant"), 1.0f);
+        glUniform1f(glGetUniformLocation(program.getProgramID(), "spotlight.linear"), 0.14f);
+        glUniform1f(glGetUniformLocation(program.getProgramID(), "spotlight.quadratic"), 0.07f);
 
         glBindVertexArray(VAO);
 

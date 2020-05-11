@@ -44,6 +44,10 @@ struct SpotLight {
     float innerAngle;
 
     Light light;
+
+    float constant;
+    float linear;
+    float quadratic;
 };
 
 uniform vec3 cameraPosition;
@@ -54,7 +58,7 @@ uniform Material material;
 
 uniform DirectionalLight dirLight;
 uniform PointLight pointLights[4];
-uniform SpotLight spotLight;
+uniform SpotLight spotlight;
 
 vec3 calculateMirrored(vec3 n, vec3 l) {
     return normalize(2 * n * dot(n, l) - l);
@@ -99,6 +103,22 @@ vec3 calculatePointLights(vec3 diffuse, vec3 specular, vec3 n, vec3 e) {
     return totalColor;
 }
 
+vec3 calculateSpotlight(vec3 diffuse, vec3 specular, vec3 n, vec3 e) {
+    vec3 l = normalize(spotlight.position - position);
+    vec3 spotlightDirection = normalize(-spotlight.direction);
+
+    float theta = dot(l, spotlightDirection);
+    float eps = spotlight.innerAngle - spotlight.outerAngle;
+
+    float k = smoothstep(0.0f, 1.0f, (theta - spotlight.outerAngle) / eps);
+
+    float dist = length(l);
+    float attenuation = 1.0f / (spotlight.constant + spotlight.linear * dist + spotlight.quadratic * dist * dist);
+    Light light = calculateLight(spotlight.light, diffuse, specular, n, e, l);
+
+    return light.ambient + (light.diffuse + light.specular) * k * attenuation;
+}
+
 void main() {
 
     vec3 n = normalize(normal);
@@ -107,5 +127,6 @@ void main() {
     vec3 specular = vec3(texture(material.specular, texPos));
 
     outColor = vec4(calculateDirectionalLight(diffuse, specular, n, e) +
-                    calculatePointLights(diffuse, specular, n, e), 1.0f);
+                    calculatePointLights(diffuse, specular, n, e) +
+                    calculateSpotlight(diffuse, specular, n, e), 1.0f);
 }
