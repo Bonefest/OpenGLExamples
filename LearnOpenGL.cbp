@@ -66,7 +66,10 @@
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="Lights/LightCasters/main_lc_1.cpp" />
+		<Unit filename="Lights/LightCasters/main_lc_1.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="Lights/LightsMaps/main_lm_1.cpp">
 			<Option compile="0" />
 			<Option link="0" />
@@ -87,6 +90,7 @@
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
+		<Unit filename="Lights/MultipleLights/main_ml_1.cpp" />
 		<Unit filename="Lights/Shaders/color_fragment.glsl" />
 		<Unit filename="Lights/Shaders/color_vertex.glsl" />
 		<Unit filename="Practice/heightmap.h" />
