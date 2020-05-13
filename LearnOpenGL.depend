@@ -1268,3 +1268,23 @@
 	"camera.h"
 	"helper.h"
 
+1589382956 source:/home/miofix/Programming/Graphics/LearnOpenGL/Models/Mesh/main_mesh_1.cpp
+	<iostream>
+	<cmath>
+	<vector>
+	<glad/glad.h>
+	<GLFW/glfw3.h>
+	"Program.h"
+	"stb_image.h"
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"camera.h"
+	"helper.h"
+	"Mesh.h"
+
+1589383088 /home/miofix/Programming/Graphics/LearnOpenGL/Mesh.h
+	<glm/glm.hpp>
+	<vector>
+	"Program.h"
+
