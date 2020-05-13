@@ -26,9 +26,9 @@ struct Texture {
 
 std::string textureTypeToString(TextureType type) {
     switch(type) {
-    case TextureType::DIFFUSE:  return "diffuseTexture";
-    case TextureType::SPECULAR: return "specularTexture";
-    case TextureType::EMISSION: return "emissionTexture";
+    case TextureType::DIFFUSE:  return "diffuse";
+    case TextureType::SPECULAR: return "specular";
+    case TextureType::EMISSION: return "emission";
     }
 
     return "";
@@ -85,9 +85,9 @@ private:
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * m_vertices.size(), &m_vertices[0], GL_STATIC_DRAW);
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)offsetof(Vertex, position));
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, (void*)offsetof(Vertex, texture_position));
-        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)offsetof(Vertex, normal));
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texture_position));
 
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);

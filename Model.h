@@ -92,7 +92,7 @@ private:
             vector<Texture> diffuseTextures = loadTextures(material, aiTextureType_DIFFUSE, TextureType::DIFFUSE);
             textures.insert(textures.end(), diffuseTextures.begin(), diffuseTextures.end());
 
-            vector<Texture> specularTextures = loadTextures(material, aiTextureType_SPECULAR, TextureType::DIFFUSE);
+            vector<Texture> specularTextures = loadTextures(material, aiTextureType_SPECULAR, TextureType::SPECULAR);
             textures.insert(textures.end(), specularTextures.begin(), specularTextures.end());
         }
 
