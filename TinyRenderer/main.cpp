@@ -33,6 +33,8 @@ void triangle(TGAImage& image, Vec3f v1, Vec3f v2, Vec3f v3, TGAColor color) {
     int my = max(max(v1.y, v2.y), v3.y);
 
     for(int y = sy;y <= my;y++) {
+
+            TGAColor resColor = TGAColor(int(rand() * 255), int(rand() * 255), int(rand() * 255), 255);
         for(int x = x0; x <= xn; x++) {
             Vec3f bar = barycentric(v1, v2, v3, Vec3f(x, y, 0));
             //std::cout << bar.x << " " << bar.y << " " << bar.z << "\n";
@@ -42,7 +44,6 @@ void triangle(TGAImage& image, Vec3f v1, Vec3f v2, Vec3f v3, TGAColor color) {
 
             //TGAColor resColor = TGAColor(int(color.r * bar.x), int(color.g * bar.y), int(color.b * bar.z), 255);
             float h = int((float(y) / HEIGHT) * 255);
-            TGAColor resColor = TGAColor(h, h, h, 255);
             image.set(x, y, resColor);
         }
     }
