@@ -12,9 +12,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <assimp/Importer.hpp>
+
 #include "camera.h"
 #include "helper.h"
-#include "Mesh.h"
+#include "Model.h"
 
 #define WIDTH 640
 #define HEIGHT 480
@@ -62,6 +64,8 @@ int main() {
 
     glfwSetCursorPosCallback(window, cursorMovementCallback);
 
+
+    Assimp::Importer importer;
 
     // SHADER PREPARING ------------------------------------------------------
     Program program("Lights/Shaders/lc_vertex.glsl", "Lights/Shaders/ml_fragment.glsl");

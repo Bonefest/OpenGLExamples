@@ -1268,7 +1268,7 @@
 	"camera.h"
 	"helper.h"
 
-1589382956 source:/home/miofix/Programming/Graphics/LearnOpenGL/Models/Mesh/main_mesh_1.cpp
+1589385451 source:/home/miofix/Programming/Graphics/LearnOpenGL/Models/Mesh/main_mesh_1.cpp
 	<iostream>
 	<cmath>
 	<vector>
@@ -1279,12 +1279,102 @@
 	<glm/glm.hpp>
 	<glm/gtc/matrix_transform.hpp>
 	<glm/gtc/type_ptr.hpp>
+	<assimp/Importer.hpp>
 	"camera.h"
 	"helper.h"
 	"Mesh.h"
 
-1589383088 /home/miofix/Programming/Graphics/LearnOpenGL/Mesh.h
+1589383698 /home/miofix/Programming/Graphics/LearnOpenGL/Mesh.h
 	<glm/glm.hpp>
 	<vector>
 	"Program.h"
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/Importer.hpp
+	<assimp/types.h>
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/types.h
+	<sys/types.h>
+	<stddef.h>
+	<string.h>
+	<limits.h>
+	"defs.h"
+	"vector3.h"
+	"vector2.h"
+	"color4.h"
+	"matrix3x3.h"
+	"matrix4x4.h"
+	"quaternion.h"
+	<cstring>
+	<new>
+	<string>
+	"vector2.inl"
+	"vector3.inl"
+	"color4.inl"
+	"quaternion.inl"
+	"matrix3x3.inl"
+	"matrix4x4.inl"
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/defs.h
+	<assimp/config.h>
+
+1589386534 /home/miofix/Programming/Graphics/Dependecies/assimp/source/build/include/assimp/config.h
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/vector3.h
+	<cmath>
+	<math.h>
+	"defs.h"
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/vector2.h
+	<cmath>
+	<math.h>
+	"./Compiler/pushpack1.h"
+	"defs.h"
+	"./Compiler/poppack1.h"
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/Compiler/pushpack1.h
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/Compiler/poppack1.h
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/color4.h
+	"defs.h"
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/matrix3x3.h
+	"defs.h"
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/matrix4x4.h
+	"vector3.h"
+	"defs.h"
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/quaternion.h
+	"defs.h"
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/vector2.inl
+	"vector2.h"
+	<cmath>
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/vector3.inl
+	"vector3.h"
+	<cmath>
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/color4.inl
+	"color4.h"
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/quaternion.inl
+	"quaternion.h"
+	<cmath>
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/matrix3x3.inl
+	"matrix3x3.h"
+	"matrix4x4.h"
+	<algorithm>
+	<cmath>
+	<limits>
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/matrix4x4.inl
+	"matrix4x4.h"
+	"matrix3x3.h"
+	"quaternion.h"
+	<algorithm>
+	<limits>
+	<cmath>
 
