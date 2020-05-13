@@ -140,6 +140,8 @@ int main() {
         -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f, 1.0f, 0.0f
     };
 
+    Model backpack("Resources/backpack.obj");
+
     unsigned int VAO, VAO2, VBO;
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -320,21 +322,10 @@ int main() {
         glUniform1f(glGetUniformLocation(program.getProgramID(), "spotlight.linear"), 0.14f);
         glUniform1f(glGetUniformLocation(program.getProgramID(), "spotlight.quadratic"), 0.07f);
 
-        glBindVertexArray(VAO);
+        model = glm::mat4(1.0f);
+        model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
 
-        for(auto cubeData : cubesData) {
-            model = glm::mat4(1.0f);
-            model = glm::translate(model, std::get<0>(cubeData));
-
-            glm::vec3 cubeOrientation = std::get<1>(cubeData);
-            model = glm::rotate(model, glm::radians(cubeOrientation.y), glm::vec3(0.0f, 1.0f, 0.0f));
-            model = glm::rotate(model, glm::radians(cubeOrientation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-            model = glm::rotate(model, glm::radians(cubeOrientation.z), glm::vec3(0.0f, 0.0f, 1.0f));
-
-            glUniformMatrix4fv(modelULoc, 1, GL_FALSE, glm::value_ptr(model));
-
-            glDrawArrays(GL_TRIANGLES, 0, 36);
-        }
+        backpack.draw(program);
 
         // ~~~~ RENDERING LIGHTS SOURCES ~~~~
         glUseProgram(lightProgram.getProgramID());

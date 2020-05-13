@@ -65,7 +65,6 @@ public:
             glUniform1i(glGetUniformLocation(program.getProgramID(), uniformName.c_str()), i);
         }
 
-
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, m_indecies.size(), GL_UNSIGNED_INT, NULL);
         glBindVertexArray(0);
@@ -86,9 +85,9 @@ private:
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * m_vertices.size(), &m_vertices[0], GL_STATIC_DRAW);
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
-        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texture_position));
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)offsetof(Vertex, position));
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, (void*)offsetof(Vertex, texture_position));
+        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)offsetof(Vertex, normal));
 
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);

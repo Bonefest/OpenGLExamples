@@ -1209,7 +1209,7 @@
 	"stb_image.h"
 	<iostream>
 
-1588518367 /home/miofix/Programming/Graphics/LearnOpenGL/helper.h
+1589394035 /home/miofix/Programming/Graphics/LearnOpenGL/helper.h
 	<glad/glad.h>
 	<GLFW/glfw3.h>
 	<string>
@@ -1268,7 +1268,7 @@
 	"camera.h"
 	"helper.h"
 
-1589385451 source:/home/miofix/Programming/Graphics/LearnOpenGL/Models/Mesh/main_mesh_1.cpp
+1589397568 source:/home/miofix/Programming/Graphics/LearnOpenGL/Models/Mesh/main_mesh_1.cpp
 	<iostream>
 	<cmath>
 	<vector>
@@ -1282,9 +1282,9 @@
 	<assimp/Importer.hpp>
 	"camera.h"
 	"helper.h"
-	"Mesh.h"
+	"Model.h"
 
-1589383698 /home/miofix/Programming/Graphics/LearnOpenGL/Mesh.h
+1589397733 /home/miofix/Programming/Graphics/LearnOpenGL/Mesh.h
 	<glm/glm.hpp>
 	<vector>
 	"Program.h"
@@ -1377,4 +1377,68 @@
 	<algorithm>
 	<limits>
 	<cmath>
+
+1589397391 /home/miofix/Programming/Graphics/LearnOpenGL/Model.h
+	<map>
+	<string>
+	<vector>
+	<assimp/postprocess.h>
+	<assimp/Importer.hpp>
+	<assimp/scene.h>
+	"Mesh.h"
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/postprocess.h
+	"types.h"
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/scene.h
+	"types.h"
+	"texture.h"
+	"mesh.h"
+	"light.h"
+	"camera.h"
+	"material.h"
+	"anim.h"
+	"metadata.h"
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/texture.h
+	"types.h"
+	"./Compiler/pushpack1.h"
+	"./Compiler/poppack1.h"
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/mesh.h
+	"types.h"
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/light.h
+	"types.h"
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/camera.h
+	"types.h"
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/material.h
+	"types.h"
+	"./Compiler/pushpack1.h"
+	"./Compiler/poppack1.h"
+	"material.inl"
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/material.inl
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/anim.h
+	<assimp/types.h>
+	<assimp/quaternion.h>
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/metadata.h
+	"Compiler/pstdint.h"
+	<stdint.h>
+	<string>
+
+1512998565 /home/miofix/Programming/Graphics/Dependecies/assimp/source/include/assimp/Compiler/pstdint.h
+	<stddef.h>
+	<limits.h>
+	<signal.h>
+	<stdint.h>
+	<sys/inttypes.h>
+	<wchar.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
 
