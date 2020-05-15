@@ -16,7 +16,8 @@ struct Vertex {
 enum class TextureType {
     DIFFUSE,
     SPECULAR,
-    EMISSION
+    NORMAL,
+    HEIGHT
 };
 
 struct Texture {
@@ -28,7 +29,8 @@ std::string textureTypeToString(TextureType type) {
     switch(type) {
     case TextureType::DIFFUSE:  return "diffuse";
     case TextureType::SPECULAR: return "specular";
-    case TextureType::EMISSION: return "emission";
+    case TextureType::NORMAL: return "normal";
+    case TextureType::HEIGHT: return "height";
     }
 
     return "";

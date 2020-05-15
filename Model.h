@@ -58,13 +58,6 @@ private:
         vector<unsigned int> indecies;
         vector<Texture> textures;
 
-
-        glm::vec2 texture_position(0.0f, 0.0f);
-        if(mesh->mTextureCoords[0]) {
-            texture_position.x = mesh->mTextureCoords[0]->x;
-            texture_position.y = mesh->mTextureCoords[0]->y;
-        }
-
         for(unsigned int i = 0;i < mesh->mNumVertices; ++i) {
             Vertex vertex;
             vertex.position.x = mesh->mVertices[i].x;
@@ -75,7 +68,10 @@ private:
             vertex.normal.y = mesh->mNormals[i].y;
             vertex.normal.z = mesh->mNormals[i].z;
 
-            vertex.texture_position = texture_position;
+            if(mesh->mTextureCoords[0]) {
+                vertex.texture_position.x = mesh->mTextureCoords[0][i].x;
+                vertex.texture_position.y = mesh->mTextureCoords[0][i].y;
+            }
             vertices.push_back(vertex);
         }
 
@@ -94,6 +90,14 @@ private:
 
             vector<Texture> specularTextures = loadTextures(material, aiTextureType_SPECULAR, TextureType::SPECULAR);
             textures.insert(textures.end(), specularTextures.begin(), specularTextures.end());
+
+            vector<Texture> normalTextures = loadTextures(material, aiTextureType_NORMALS, TextureType::NORMAL);
+            textures.insert(textures.end(), normalTextures.begin(), normalTextures.end());
+
+            vector<Texture> heightTextures = loadTextures(material, aiTextureType_HEIGHT, TextureType::HEIGHT);
+            textures.insert(textures.end(), heightTextures.begin(), heightTextures.end());
+
+
         }
 
         m_meshes.push_back(Mesh(vertices, indecies, textures));
@@ -117,6 +121,7 @@ private:
 
             textures.push_back(texture);
         }
+
 
         return textures;
     }

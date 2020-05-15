@@ -55,6 +55,8 @@ int main() {
         return -1;
     }
 
+    stbi_set_flip_vertically_on_load(true);
+
     //glViewport(0, 0, 640, 480); will be called as well for the first loading
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 

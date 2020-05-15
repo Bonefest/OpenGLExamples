@@ -16,9 +16,15 @@
 					<Add option="-g" />
 					<Add directory="../Dependecies/include" />
 					<Add directory="/home/miofix/Programming/Graphics/LearnOpenGL" />
+					<Add directory="../Dependecies/assimp/source/include" />
+					<Add directory="../Dependecies/assimp/source/build/include" />
 				</Compiler>
 				<Linker>
 					<Add option="../Dependecies/libglfw3.a -lGL -lX11 -lpthread -lXrandr -lXi -ldl" />
+					<Add library="../Dependecies/assimp/source/build/code/libassimp.so" />
+					<Add library="../Dependecies/assimp/source/build/code/libassimp.so.4" />
+					<Add library="../Dependecies/assimp/build/code/libassimp.so.4.1.0" />
+					<Add directory="../Dependecies/assimp/build/code" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -90,9 +96,15 @@
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="Lights/MultipleLights/main_ml_1.cpp" />
+		<Unit filename="Lights/MultipleLights/main_ml_1.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="Lights/Shaders/color_fragment.glsl" />
 		<Unit filename="Lights/Shaders/color_vertex.glsl" />
+		<Unit filename="Mesh.h" />
+		<Unit filename="Model.h" />
+		<Unit filename="Models/Mesh/main_mesh_1.cpp" />
 		<Unit filename="Practice/heightmap.h" />
 		<Unit filename="Program.cpp" />
 		<Unit filename="Program.h" />
