@@ -52,6 +52,7 @@
 		<Unit filename="../Dependecies/include/glad/glad.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="Advanced/DepthTesting/main_dt_1.cpp" />
 		<Unit filename="Lights/BasicLight/main_lights_1.cpp">
 			<Option compile="0" />
 			<Option link="0" />
@@ -104,7 +105,10 @@
 		<Unit filename="Lights/Shaders/color_vertex.glsl" />
 		<Unit filename="Mesh.h" />
 		<Unit filename="Model.h" />
-		<Unit filename="Models/Mesh/main_mesh_1.cpp" />
+		<Unit filename="Models/Mesh/main_mesh_1.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="Practice/heightmap.h" />
 		<Unit filename="Program.cpp" />
 		<Unit filename="Program.h" />

@@ -75,6 +75,12 @@ int main() {
         return -1;
     }
 
+    Program outlineProgram("Lights/Shaders/lc_vertex.glsl", "Advanced/Shaders/outline_fragment.glsl");
+    if(outlineProgram.hasError()) {
+        std::cout << outlineProgram.getErrorMessage() << std::endl;
+        return -1;
+    }
+
     // TEXTURE LOADING -------------------------------------------------------
 
     unsigned int textureDiffuse, textureSpecular;
@@ -220,22 +226,20 @@ int main() {
     GLint lightViewULoc = glGetUniformLocation(program.getProgramID(), "view");
     GLint lightProjULoc = glGetUniformLocation(program.getProgramID(), "proj");
 
-    // RENDER LOOP -----------------------------------------------------------
 
+    glEnable(GL_STENCIL_TEST);
     glEnable(GL_DEPTH_TEST);
+
     glClearColor(0.73f, 0.88f, 0.98f, 1.0f);
 
     glUseProgram(program.getProgramID());
 
-    glUniform1i(glGetUniformLocation(program.getProgramID(), "material.diffuse"), 0);
-    glUniform1i(glGetUniformLocation(program.getProgramID(), "material.specular"), 1);
-
-
+    // RENDER LOOP -----------------------------------------------------------
 
     while(!glfwWindowShouldClose(window)) {
         processInput(window);
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
         float time = glfwGetTime();
         deltaTime = time - lastTime;
@@ -252,9 +256,13 @@ int main() {
         spotlightPosition = camera.position;
         spotlightDirection = camera.getCameraDirection();
 
-        std::cout << camera.getCameraDirection().x << " " << camera.getCameraDirection().y << " " << camera.getCameraDirection().z << std::endl;
-
         // ~~~~ RENDERING OBJECTS ~~~~
+        glEnable(GL_DEPTH_TEST);
+
+        glStencilMask(0xFF);
+        glStencilFunc(GL_ALWAYS, 1, 0xFF);
+        glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+
         glUseProgram(program.getProgramID());
 
         glActiveTexture(GL_TEXTURE0);
@@ -331,7 +339,38 @@ int main() {
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
+
+        // ~~~~ RENDERING OUTLINES ~~~~~~~~~~
+        //glDisable(GL_DEPTH_TEST);
+        glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+        glStencilMask(0xFF);
+        glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+
+        glUseProgram(outlineProgram.getProgramID());
+
+        glUniformMatrix4fv(glGetUniformLocation(outlineProgram.getProgramID(), "view"), 1, GL_FALSE, glm::value_ptr(camera.getCameraTransform()));
+        glUniformMatrix4fv(glGetUniformLocation(outlineProgram.getProgramID(), "proj"), 1, GL_FALSE, glm::value_ptr(proj));
+
+        glBindVertexArray(VAO);
+
+        for(auto cubeData: cubesData) {
+            model = glm::mat4(1.0f);
+            model = glm::translate(model, cubeData.first);
+
+            model = glm::rotate(model, glm::radians(cubeData.second.y), glm::vec3(0, 1, 0));
+            model = glm::rotate(model, glm::radians(cubeData.second.x), glm::vec3(1, 0, 0));
+            model = glm::rotate(model, glm::radians(cubeData.second.z), glm::vec3(0, 0, 1));
+            model = glm::scale(model, glm::vec3(1.05f));
+
+
+            glUniformMatrix4fv(glGetUniformLocation(outlineProgram.getProgramID(), "model"), 1, GL_FALSE, glm::value_ptr(model));
+
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
+
         // ~~~~ RENDERING LIGHTS SOURCES ~~~~
+        glEnable(GL_DEPTH_TEST);
+
         glUseProgram(lightProgram.getProgramID());
 
         glUniformMatrix4fv(lightViewULoc, 1, GL_FALSE, glm::value_ptr(view));
