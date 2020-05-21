@@ -237,8 +237,7 @@ int main() {
         lastTime = time;
 
 
-        view = camera.getCameraTransform();
-
+        view = glm::lookAt(glm::vec3(std::cos(time) * 3.0f, 0.0f, std::sin(time) * 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
         pointLightPositions[0] = glm::vec3(std::cos(time) * 5.0f, 0.0f, std::sin(time) * 5.0f);
         pointLightPositions[1] = glm::vec3(std::cos(time) * 5.0f, std::sin(time) * 5.0f, 0.0f);
@@ -251,14 +250,10 @@ int main() {
 
         glUseProgram(outlineProgram.getProgramID());
 
-        glUniformMatrix4fv(glGetUniformLocation(outlineProgram.getProgramID(), "view"), 1, GL_FALSE, glm::value_ptr(camera.getCameraTransform()));
+        glUniformMatrix4fv(glGetUniformLocation(outlineProgram.getProgramID(), "view"), 1, GL_FALSE, glm::value_ptr(view));
         glUniformMatrix4fv(glGetUniformLocation(outlineProgram.getProgramID(), "proj"), 1, GL_FALSE, glm::value_ptr(proj));
 
         glEnable(GL_DEPTH_TEST);
-
-        glStencilMask(0xFF);
-        glStencilFunc(GL_ALWAYS, 1, 0xFF);
-        glStencilOp(GL_KEEP, GL_REPLACE, GL_REPLACE);
 
         glUseProgram(program.getProgramID());
 
@@ -323,28 +318,21 @@ int main() {
 
         glBindVertexArray(VAO);
 
-        for(int i = 0;i < 2; ++i) {
-            glClear(GL_STENCIL_BUFFER_BIT); //Without it drawing behavior will be wrong:
-                                            //1. First cube will be drawn and take some place in stencil buffer.
-                                            //2. If we will be looking at first cube from position of 2nd
-                                            //   it's possible that some elements of stencil buffer would be already
-                                            //   set by first cube and as result outline of 2nd cube will be invisible.
-                                            //   (cause our test will fail - buffer already contains 1s!).
+        glStencilMask(0x00);
+        drawCube(program.getProgramID(), cubesPos[0]);
 
-                                            //Thanks to clearing we get rid of stencil data from previous cubes and
-                                            //it's impossible now that previous cube could take place.
+        glStencilMask(0xFF);
+        glStencilFunc(GL_ALWAYS, 1, 0xFF);
+        glStencilOp(GL_KEEP, GL_REPLACE, GL_REPLACE);
+        drawCube(program.getProgramID(), cubesPos[1]);
 
-            glUseProgram(program.getProgramID());
-            glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-            glStencilFunc(GL_ALWAYS, 1, 0xFF);
-            drawCube(program.getProgramID(), cubesPos[i]);
+        glUseProgram(outlineProgram.getProgramID());
 
-            glUseProgram(outlineProgram.getProgramID());
-            glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-            glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-            drawCube(program.getProgramID(), cubesPos[i], 1.1f);
-
-        }
+        glDisable(GL_DEPTH_TEST);
+        glStencilMask(0xFF);
+        glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+        glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+        drawCube(program.getProgramID(), cubesPos[1], 1.1f);
 
         // ~~~~ RENDERING LIGHTS SOURCES ~~~~
         glEnable(GL_DEPTH_TEST);
