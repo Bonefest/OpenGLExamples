@@ -197,10 +197,10 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, vegVBO);
 
     glBufferData(GL_ARRAY_BUFFER, sizeof(vegPositions), vegPositions, GL_STATIC_DRAW);
-    glVertexAttribLPointer(0, sizeof(float) * 3, GL_FLOAT, sizeof(float) * 5, (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)0);
     glEnableVertexAttribArray(0);
 
-    glVertexAttribLPointer(1, sizeof(float) * 2, GL_FLOAT, sizeof(float) * 5, (void*)(sizeof(float) * 3));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)(sizeof(float) * 3));
     glEnableVertexAttribArray(1);
 
     glBindVertexArray(vegVAO);
@@ -241,10 +241,12 @@ int main() {
 
     // GRASS INFORMATION -----------------------------------------------------
 
-    std::vector<glm::vec3> grassPositions;
-    grassPositions.push_back(glm::vec3(5.0f, 0.0f, 5.0f));
-    grassPositions.push_back(glm::vec3(7.0f, 0.0f, 5.0f));
-    grassPositions.push_back(glm::vec3(6.5f, 0.0f, 6.5f));
+    std::vector<std::pair<glm::vec3, glm::vec3>> grassPositions;
+    grassPositions.emplace_back(glm::vec3(5.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+    grassPositions.emplace_back(glm::vec3(5.0f, 0.0f, 5.0f), glm::vec3(0.0f, glm::radians(45.0f), 0.0f));
+
+    grassPositions.emplace_back(glm::vec3(7.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+    grassPositions.emplace_back(glm::vec3(6.5f, 0.0f, 6.5f), glm::vec3(0.0f, 0.0f, 0.0f));
 
     // MISC ------------------------------------------------------------------
 
@@ -371,6 +373,7 @@ int main() {
 
         // ~~~~ RENDERING GRASS ~~~~
         glUseProgram(blendingProgram.getProgramID());
+        glBindVertexArray(vegVAO);
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, vegTexture);
@@ -382,7 +385,8 @@ int main() {
 
         for(auto grassPosition : grassPositions) {
             model = glm::mat4(1.0f);
-            model = glm::translate(model, grassPosition);
+            model = glm::translate(model, std::get<0>(grassPosition));
+            model = eulerRotate(model, std::get<1>(grassPosition));
             glUniformMatrix4fv(glGetUniformLocation(blendingProgram.getProgramID(), "model"), 1, GL_FALSE, glm::value_ptr(model));
             glDrawArrays(GL_TRIANGLES, 0, 6);
         }

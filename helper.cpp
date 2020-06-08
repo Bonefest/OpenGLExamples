@@ -30,3 +30,12 @@ bool loadTexture(const std::string& path,
 
     return true;
 }
+
+glm::mat4 eulerRotate(glm::mat4 mat, glm::vec3 angles) {
+    glm::mat4 result = mat;
+    result = glm::rotate(result, angles.y, glm::vec3(0.0f, 1.0f, 0.0f));
+    result = glm::rotate(result, angles.x, glm::vec3(1.0f, 0.0f, 0.0f));
+    result = glm::rotate(result, angles.z, glm::vec3(0.0f, 0.0f, 1.0f));
+
+    return result;
+}
