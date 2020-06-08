@@ -56,7 +56,15 @@
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="Advanced/StencilTesting/main_stencil_1.cpp" />
+		<Unit filename="Advanced/StencilTesting/main_stencil_1.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="Advanced/StencilTesting/main_stencil_2.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="Advanced/StencilTesting/main_stencil_3.cpp" />
 		<Unit filename="Lights/BasicLight/main_lights_1.cpp">
 			<Option compile="0" />
 			<Option link="0" />
