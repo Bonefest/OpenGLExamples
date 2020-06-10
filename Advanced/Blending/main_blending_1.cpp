@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <map>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "Program.h"
@@ -9,6 +10,7 @@
 #include "stb_image.h"
 
 #include <glm/glm.hpp>
+#include <glm/gtx/norm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -97,7 +99,7 @@ int main() {
     stbi_set_flip_vertically_on_load(true);
 
     glGenTextures(1, &vegTexture);
-    if(!loadTexture("Resources/grass.png", vegTexture, GL_RGBA, GL_RGBA, true)) {
+    if(!loadTexture("Resources/blending_transparent_window.png", vegTexture, GL_RGBA, GL_RGBA, true)) {
         return -1;
     }
 
@@ -262,17 +264,25 @@ int main() {
     GLint lightViewULoc = glGetUniformLocation(program.getProgramID(), "view");
     GLint lightProjULoc = glGetUniformLocation(program.getProgramID(), "proj");
 
-
+    glEnable(GL_BLEND);
     glEnable(GL_STENCIL_TEST);
     glEnable(GL_DEPTH_TEST);
 
     glClearColor(0.73f, 0.88f, 0.98f, 1.0f);
-
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glUseProgram(program.getProgramID());
+
+    std::multimap<float, std::pair<glm::vec3, glm::vec3>> sortedTransparentObjects;
 
     // RENDER LOOP -----------------------------------------------------------
 
     while(!glfwWindowShouldClose(window)) {
+        sortedTransparentObjects.clear();
+        for(auto object : grassPositions) {
+            float sqrDst = glm::distance2(object.first, camera.position);
+            sortedTransparentObjects.emplace(sqrDst, object);
+        }
+
         processInput(window);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -371,25 +381,7 @@ int main() {
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
-        // ~~~~ RENDERING GRASS ~~~~
-        glUseProgram(blendingProgram.getProgramID());
-        glBindVertexArray(vegVAO);
 
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, vegTexture);
-
-        glUniform1i(glGetUniformLocation(blendingProgram.getProgramID(), "texture1"), 0);
-
-        glUniformMatrix4fv(glGetUniformLocation(blendingProgram.getProgramID(), "view"), 1, GL_FALSE, glm::value_ptr(view));
-        glUniformMatrix4fv(glGetUniformLocation(blendingProgram.getProgramID(), "proj"), 1, GL_FALSE, glm::value_ptr(proj));
-
-        for(auto grassPosition : grassPositions) {
-            model = glm::mat4(1.0f);
-            model = glm::translate(model, std::get<0>(grassPosition));
-            model = eulerRotate(model, std::get<1>(grassPosition));
-            glUniformMatrix4fv(glGetUniformLocation(blendingProgram.getProgramID(), "model"), 1, GL_FALSE, glm::value_ptr(model));
-            glDrawArrays(GL_TRIANGLES, 0, 6);
-        }
 
 
         // ~~~~ RENDERING LIGHTS SOURCES ~~~~
@@ -412,6 +404,37 @@ int main() {
             glUniform3fv(glGetUniformLocation(lightProgram.getProgramID(), "sourceColor"), 1, glm::value_ptr(lightSourceDiffuseColor));
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
+
+        /*
+            If we'll be drawing first grass and then windows we'll got a problem behind windows
+            when looking at point sources cause window is closer and it'll fill depth buffer with
+            lower values first and as result we won't see light sources cause they'll be simply
+            discarded (depth buffer don't take in account alpha values).
+
+            To solve this problem, we need to draw transparent objects like window at the last phase -
+            when all opaque objects are already drawn. As result, when we will be drawing the window
+            it'll be blended with colors behind as we want.
+        */
+
+        // ~~~~ RENDERING GRASS ~~~~
+        glUseProgram(blendingProgram.getProgramID());
+        glBindVertexArray(vegVAO);
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, vegTexture);
+
+        glUniform1i(glGetUniformLocation(blendingProgram.getProgramID(), "texture1"), 0);
+
+        glUniformMatrix4fv(glGetUniformLocation(blendingProgram.getProgramID(), "view"), 1, GL_FALSE, glm::value_ptr(view));
+        glUniformMatrix4fv(glGetUniformLocation(blendingProgram.getProgramID(), "proj"), 1, GL_FALSE, glm::value_ptr(proj));
+
+        for(auto grassIt = sortedTransparentObjects.rbegin(); grassIt != sortedTransparentObjects.rend(); grassIt++) {
+            model = glm::mat4(1.0f);
+            model = glm::translate(model, grassIt->second.first);
+            model = eulerRotate(model, grassIt->second.second);
+            glUniformMatrix4fv(glGetUniformLocation(blendingProgram.getProgramID(), "model"), 1, GL_FALSE, glm::value_ptr(model));
+            glDrawArrays(GL_TRIANGLES, 0, 6);
         }
 
         glfwSwapBuffers(window);
