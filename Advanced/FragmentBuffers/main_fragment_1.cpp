@@ -75,7 +75,7 @@ int main() {
         return -1;
     }
 
-    Program postProgram("Advanced/FragmentBuffers/post_vertex.glsl", "Advanced/FragmentBuffers/pixelate_fragment.glsl");
+    Program postProgram("Advanced/FragmentBuffers/post_vertex.glsl", "Advanced/FragmentBuffers/blur_fragment.glsl");
     if(postProgram.hasError()) {
         std::cout << postProgram.getErrorMessage() << std::endl;
         return -1;
