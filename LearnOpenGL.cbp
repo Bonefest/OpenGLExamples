@@ -52,7 +52,11 @@
 		<Unit filename="../Dependecies/include/glad/glad.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Advanced/Blending/main_blending_1.cpp" />
+		<Unit filename="Advanced/Blending/main_blending_1.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="Advanced/Culling/main_culling_1.cpp" />
 		<Unit filename="Advanced/DepthTesting/main_dt_1.cpp">
 			<Option compile="0" />
 			<Option link="0" />
