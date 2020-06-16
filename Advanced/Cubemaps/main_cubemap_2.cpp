@@ -82,6 +82,12 @@ int main() {
         return -1;
     }
 
+    Program reflectProgram("Advanced/Cubemaps/reflection_vertex.glsl", "Advanced/Cubemaps/reflection_fragment.glsl");
+    if(reflectProgram.hasError()) {
+        std::cout << reflectProgram.getErrorMessage() << std::endl;
+        return -1;
+    }
+
     // TEXTURE LOADING -------------------------------------------------------
 
     unsigned int textureDiffuse, textureSpecular;
@@ -226,6 +232,8 @@ int main() {
     cubesData.emplace_back(glm::vec3(-1.5f, 0.4f, 0.0f), glm::vec3(17.6f, 23.0f, 0.0f));
     cubesData.emplace_back(glm::vec3(0.5f, 1.3f, 3.2f), glm::vec3(0.6f, 23.0f, 76.17f));
 
+    std::pair<glm::vec3, glm::vec3> reflectCubeData(glm::vec3(5.0f, 5.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+
     // MISC ------------------------------------------------------------------
 
     glm::mat4 model, view, proj;
@@ -281,6 +289,32 @@ int main() {
         glUniformMatrix4fv(glGetUniformLocation(cubemapProgram.getProgramID(), "proj"), 1, GL_FALSE, glm::value_ptr(proj));
 
         glBindVertexArray(cubeVAO);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+        // ~~~~ RENDERING REFLECTION BOX ~~~~
+        glEnable(GL_DEPTH_TEST);
+
+        glUseProgram(reflectProgram.getProgramID());
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, textureCubemap);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, textureSpecular);
+        glUniform1i(glGetUniformLocation(reflectProgram.getProgramID(), "spectex"), 1);
+        glUniform1i(glGetUniformLocation(reflectProgram.getProgramID(), "texcube"), 0);
+        glUniform3fv(glGetUniformLocation(reflectProgram.getProgramID(), "cameraPosition"), 1, glm::value_ptr(camera.position));
+        glUniformMatrix4fv(glGetUniformLocation(reflectProgram.getProgramID(), "proj"), 1, GL_FALSE, glm::value_ptr(proj));
+        glUniformMatrix4fv(glGetUniformLocation(reflectProgram.getProgramID(), "view"), 1, GL_FALSE, glm::value_ptr(view));
+
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, reflectCubeData.first);
+        model = glm::rotate(model, glm::radians(reflectCubeData.second.z), glm::vec3(0.0f, 0.0f, 1.0f));
+        model = glm::rotate(model, glm::radians(reflectCubeData.second.x), glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(reflectCubeData.second.y), glm::vec3(0.0f, 1.0f, 0.0f));
+
+        glUniformMatrix4fv(glGetUniformLocation(reflectProgram.getProgramID(), "model"), 1, GL_FALSE, glm::value_ptr(model));
+
+        glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 36);
 
         // ~~~~ RENDERING OBJECTS ~~~~
