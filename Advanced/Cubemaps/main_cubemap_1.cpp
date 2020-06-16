@@ -27,6 +27,7 @@ void processInput(GLFWwindow* window);
 bool checkShaderCompilationStatus(GLuint shader);
 bool checkProgramCompilationStatus(GLuint program);
 
+unsigned int loadCubemap(const std::vector<std::string>& paths);
 
 Camera camera(glm::vec3(0.0f, 0.0f, 0.0f), -90.0f, 0.0f, 67.5f);
 
@@ -75,9 +76,9 @@ int main() {
         return -1;
     }
 
-    Program postProgram("Advanced/FragmentBuffers/post_vertex.glsl", "Advanced/FragmentBuffers/blur_fragment.glsl");
-    if(postProgram.hasError()) {
-        std::cout << postProgram.getErrorMessage() << std::endl;
+    Program cubemapProgram("Advanced/Cubemaps/cubemap_vertex.glsl", "Advanced/Cubemaps/cubemap_fragment.glsl");
+    if(cubemapProgram.hasError()) {
+        std::cout << cubemapProgram.getErrorMessage() << std::endl;
         return -1;
     }
 
@@ -94,10 +95,19 @@ int main() {
         return -1;
     }
 
+    unsigned int textureCubemap = loadCubemap({"Resources/right.jpg",
+                                               "Resources/left.jpg",
+                                               "Resources/top.jpg",
+                                               "Resources/bottom.jpg",
+                                               "Resources/front.jpg",
+                                               "Resources/back.jpg"});
+    if(textureCubemap == -1) {
+        return -1;
+    }
 
     // DATA PREPARING  -------------------------------------------------------
     float positions[] = {
-        //BACK
+
         -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 0.0f, 0.0f, -1.0f,
          0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f, 0.0f, -1.0f,
          0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f, 0.0f, -1.0f,
@@ -141,7 +151,53 @@ int main() {
         -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f, 1.0f, 0.0f
     };
 
-    unsigned int VAO, VAO2, postVAO, VBO, postVBO;
+    float cubemapPositions[] = {
+
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+         0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+         0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+         0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+
+        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+         0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+
+        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+
+         0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+
+        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+         0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+         0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+         0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+
+        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+         0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
+    };
+
+
+    unsigned int VAO, VAO2, VBO;
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     glGenVertexArrays(1, &VAO);
@@ -168,67 +224,19 @@ int main() {
     glEnableVertexAttribArray(0);
 
 
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    unsigned int cubeVAO;
+    glGenVertexArrays(1, &cubeVAO);
+    glBindVertexArray(cubeVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)0);
+    glEnableVertexAttribArray(0);
+
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-
-    //~~~~ Frame buffer ~~~~
-
-    float quad[] = {
-        -1.0f, -1.0f,  0.0f, 0.0f,
-         1.0f, -1.0f,  1.0f, 0.0f,
-         1.0f,  1.0f,  1.0f, 1.0f,
-
-         1.0f,  1.0f,  1.0f, 1.0f,
-        -1.0f,  1.0f,  0.0f, 1.0f,
-        -1.0f, -1.0f,  0.0f, 0.0f
-    };
-
-    glGenVertexArrays(1, &postVAO);
-    glGenBuffers(1, &postVBO);
-
-    glBindVertexArray(postVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, postVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(quad), quad, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 4, (void*)0);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 4, (void*)(2 * sizeof(float)));
-
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-
-    glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    unsigned int fbo;
-    glGenFramebuffers(1, &fbo);
-    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-
-    unsigned int screentex;
-    glGenTextures(1, &screentex);
-    glBindTexture(GL_TEXTURE_2D, screentex);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 640, 480, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, screentex, 0);
-
-
-    unsigned int rbo;
-    glGenRenderbuffers(1, &rbo);
-    glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 640, 480);
-
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
-
-
-    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-        return -1;
 
     // DATA ------------------------------------------------------------------
 
@@ -280,7 +288,7 @@ int main() {
 
     // RENDER LOOP -----------------------------------------------------------
 
-    //glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
     glClearColor(0.73f, 0.88f, 0.98f, 1.0f);
 
     glUseProgram(program.getProgramID());
@@ -293,8 +301,6 @@ int main() {
     while(!glfwWindowShouldClose(window)) {
         processInput(window);
 
-        glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-        glEnable(GL_DEPTH_TEST);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         float time = glfwGetTime();
@@ -312,7 +318,20 @@ int main() {
         spotlightPosition = camera.position;
         spotlightDirection = camera.getCameraDirection();
 
+        // ~~~~ RENDERING SKYBOX ~~~~
+        glDisable(GL_DEPTH_TEST);
+
+        glUseProgram(cubemapProgram.getProgramID());
+        glBindTexture(GL_TEXTURE_CUBE_MAP, textureCubemap);
+        glUniformMatrix4fv(glGetUniformLocation(cubemapProgram.getProgramID(), "view"), 1, GL_FALSE, glm::value_ptr(view));
+        glUniformMatrix4fv(glGetUniformLocation(cubemapProgram.getProgramID(), "proj"), 1, GL_FALSE, glm::value_ptr(proj));
+
+        glBindVertexArray(cubeVAO);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+
         // ~~~~ RENDERING OBJECTS ~~~~
+        glEnable(GL_DEPTH_TEST);
+
         glUseProgram(program.getProgramID());
 
         glActiveTexture(GL_TEXTURE0);
@@ -409,33 +428,9 @@ int main() {
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
-
-        // Rendering to default screen
-
-
-        glUseProgram(postProgram.getProgramID());
-
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        glDisable(GL_DEPTH_TEST);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, screentex);
-        glUniform1i(glGetUniformLocation(postProgram.getProgramID(), "texture"), 0);
-
-        glBindVertexArray(postVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-
-    glDeleteFramebuffers(1, &fbo);
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteVertexArrays(1, &VAO2);
-    glDeleteVertexArrays(1, &postVAO);
-    glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &postVBO);
 
     glfwTerminate();
     return 0;
@@ -479,4 +474,36 @@ void processInput(GLFWwindow* window) {
 
 void cursorMovementCallback(GLFWwindow* window, double x, double y) {
     camera.processMouse(window, x, y);
+}
+
+unsigned int loadCubemap(const std::vector<std::string>& paths) {
+    if(paths.size() != 6) return -1;
+
+    unsigned int cubemap;
+    glGenTextures(1, &cubemap);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, cubemap);
+
+    unsigned char* data;
+    int width, height, channels;
+
+    for(int i = 0;i < 6; ++i) {
+        data = stbi_load(paths[i].c_str(), &width, &height, &channels, 0);
+        if(data) {
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+            stbi_image_free(data);
+        } else {
+            std::cout << "Can't load a cubemap (path " << paths[i] << " is incorrect)\n";
+            glDeleteTextures(1, &cubemap);
+            return -1;
+        }
+    }
+
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+    return cubemap;
 }
