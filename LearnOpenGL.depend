@@ -1556,3 +1556,17 @@
 	"camera.h"
 	"helper.h"
 
+1592509549 source:/home/miofix/Programming/Graphics/LearnOpenGL/Advanced/Misc/main_divided.cpp
+	<iostream>
+	<cmath>
+	<vector>
+	<glad/glad.h>
+	<GLFW/glfw3.h>
+	"Program.h"
+	"stb_image.h"
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	"camera.h"
+	"helper.h"
+
