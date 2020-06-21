@@ -64,7 +64,10 @@
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="Advanced/Cubemaps/main_cubemap_3.cpp" />
+		<Unit filename="Advanced/Cubemaps/main_cubemap_3.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="Advanced/Culling/main_culling_1.cpp">
 			<Option compile="0" />
 			<Option link="0" />
@@ -77,6 +80,7 @@
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
+		<Unit filename="Advanced/Misc/main_divided.cpp" />
 		<Unit filename="Advanced/StencilTesting/main_stencil_1.cpp">
 			<Option compile="0" />
 			<Option link="0" />
