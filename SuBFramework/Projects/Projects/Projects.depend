@@ -1,0 +1,129 @@
+# depslib dependency file v1.0
+1592763522 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main.cpp
+	<iostream>
+	"sb7.h"
+
+1592763649 /home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/include/sb7.h
+	<Windows.h>
+	<unistd.h>
+	"GL/gl3w.h"
+	"GLFW/glfw3.h"
+	"sb7ext.h"
+	<stdio.h>
+	<string.h>
+	<math.h>
+
+1592762721 /home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/include/GL/gl3w.h
+	<GL/glcorearb.h>
+
+1592762721 /home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/include/GL/glcorearb.h
+	<windows.h>
+	<stddef.h>
+	<inttypes.h>
+	<inttypes.h>
+	<inttypes.h>
+	<stdint.h>
+	<stdint.h>
+	<inttypes.h>
+
+1577892284 /home/miofix/Programming/Graphics/Dependecies/include/GLFW/glfw3.h
+	<stddef.h>
+	<stdint.h>
+	<vulkan/vulkan.h>
+	<GLES/gl.h>
+	<GLES/glext.h>
+	<GLES2/gl2.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl3.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl31.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl32.h>
+	<GLES2/gl2ext.h>
+	<OpenGL/gl3.h>
+	<OpenGL/gl3ext.h>
+	<GL/glcorearb.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glext.h>
+	<GL/glu.h>
+
+1592762721 /home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/include/GL/glext.h
+	<windows.h>
+	<stddef.h>
+	<inttypes.h>
+	<inttypes.h>
+	<inttypes.h>
+	<stdint.h>
+	<stdint.h>
+	<inttypes.h>
+
+1592762721 /home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/include/sb7ext.h
+	"GL/glext.h"
+
+1592762721 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/src/sb7/gl3w.c
+	<GL/gl3w.h>
+	<windows.h>
+	<Carbon/Carbon.h>
+	<dlfcn.h>
+	<GL/glx.h>
+
+1592762721 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/src/sb7/sb7.cpp
+	<sb7.h>
+	<GL/glext.h>
+	<string.h>
+
+1592762721 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/src/sb7/sb7color.cpp
+	<vmath.h>
+	<sb7color.h>
+
+1592762721 /home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/include/vmath.h
+	<math.h>
+
+1592762721 /home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/include/sb7color.h
+	<vmath.h>
+
+1592762721 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/src/sb7/sb7ktx.cpp
+	"sb7ktx.h"
+	<cstdio>
+	<cstdlib>
+	<cstring>
+	"GL/gl3w.h"
+
+1592762721 /home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/include/sb7ktx.h
+
+1592762721 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/src/sb7/sb7object.cpp
+	"GL/gl3w.h"
+	<object.h>
+	<stdio.h>
+
+1592762721 /home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/include/object.h
+	"sb6mfile.h"
+	<GL/glcorearb.h>
+
+1592762721 /home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/include/sb6mfile.h
+
+1592762721 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/src/sb7/sb7shader.cpp
+	"GL/gl3w.h"
+	<cstdio>
+
+1592762721 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/src/sb7/sb7textoverlay.cpp
+	<sb7textoverlay.h>
+	<sb7ktx.h>
+
+1592762721 /home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/include/sb7textoverlay.h
+	<sb7.h>
+
+1592767696 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/2c_rainbow_screen.cpp
+	<iostream>
+	"sb7.h"
+
+1592767095 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/2c_point.cpp
+	<iostream>
+	"sb7.h"
+
+1592767804 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/2c_triangle.cpp
+	<iostream>
+	"sb7.h"
+
