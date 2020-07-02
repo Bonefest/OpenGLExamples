@@ -123,7 +123,22 @@
 	<iostream>
 	"sb7.h"
 
-1592767804 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/2c_triangle.cpp
+1593720194 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/2c_triangle.cpp
 	<iostream>
 	"sb7.h"
+
+1593721128 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/common/src/Program.cpp
+	"../Program.h"
+	<fstream>
+	<sstream>
+	<iostream>
+
+1593720234 /home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/common/Program.h
+	<string>
+	"sb7.h"
+
+1593720957 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/3с_attribute_test.cpp
+	<iostream>
+	"sb7.h"
+	"Program.h"
 

@@ -13,7 +13,12 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="../../include" />
+					<Add directory="../../../../Dependecies/include" />
 				</Compiler>
+				<Linker>
+					<Add option="/home/miofix/Programming/Graphics/Dependecies/libglfw3.a -lGL -lX11 -lpthread -lXrandr -lXi -ldl" />
+				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option output="bin/Release/Projects" prefix_auto="1" extension_auto="1" />
@@ -32,7 +37,18 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Unit filename="../../src/sb7/gl3w.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/sb7/sb7.cpp" />
+		<Unit filename="../../src/sb7/sb7color.cpp" />
+		<Unit filename="../../src/sb7/sb7ktx.cpp" />
+		<Unit filename="../../src/sb7/sb7object.cpp" />
+		<Unit filename="../../src/sb7/sb7shader.cpp" />
+		<Unit filename="../../src/sb7/sb7textoverlay.cpp" />
+		<Unit filename="main_code/2c_point.cpp" />
+		<Unit filename="main_code/2c_rainbow_screen.cpp" />
+		<Unit filename="main_code/2c_triangle.cpp" />
 		<Extensions>
 			<envvars />
 			<code_completion />

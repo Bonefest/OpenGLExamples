@@ -78,4 +78,4 @@ private:
 
 };
 
-DECLARE_MAIN(TriangleApp)
+//DECLARE_MAIN(TriangleApp)
