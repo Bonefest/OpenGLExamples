@@ -12,53 +12,21 @@ Program::~Program() {
 
 bool Program::loadShaders(const std::string& vertexPath, const std::string& fragmentPath) {
 
-    unsigned int vertexShader, fragmentShader;
-    if( (vertexShader = createShader(vertexPath, GL_VERTEX_SHADER)) == 0) {
-        return false;
-    }
-
-    if( (fragmentShader = createShader(fragmentPath, GL_FRAGMENT_SHADER)) == 0) {
-        glDeleteShader(vertexShader);
-        return false;
-    }
-
-
-    auto deleteShaders = [&](){
-        glDeleteShader(vertexShader);
-        glDeleteShader(fragmentShader);
-    };
-
-    unsigned int program = glCreateProgram();
-    if(program == 0) {
+    reset();
+    if(m_programID == 0) {
         strcpy(m_lastMessageBuffer, "Cannot create a program");
-        deleteShaders();
         return false;
     }
 
-    glAttachShader(program, vertexShader);
-    glAttachShader(program, fragmentShader);
-    glLinkProgram(program);
-
-    GLint linkStatus;
-    glGetProgramiv(program, GL_LINK_STATUS, &linkStatus);
-    if(linkStatus != GL_TRUE) {
-
-        deleteShaders();
-
-        GLint logLen = 0;
-        glGetProgramInfoLog(program, BUF_SIZE, &logLen, m_lastMessageBuffer);
-        m_lastMessageBuffer[logLen] = '\0';
-
+    if(!loadShader(vertexPath,GL_VERTEX_SHADER) ||
+       !loadShader(fragmentPath, GL_FRAGMENT_SHADER)) {
         return false;
     }
 
-    if(m_programID != 0) {
-        glDeleteProgram(m_programID);
+    if(!link()) {
+        return false;
     }
 
-    m_programID = program;
-
-    deleteShaders();
 
     return true;
 }
@@ -99,4 +67,51 @@ unsigned int Program::createShader(const std::string& path, GLenum shaderType) {
 
 void Program::useProgram() {
     glUseProgram(m_programID);
+}
+
+void Program::reset() {
+    if(m_programID != 0) {
+        glDeleteProgram(m_programID);
+    }
+
+    m_programID = glCreateProgram();
+}
+
+bool Program::loadShader(const std::string& path, GLenum shaderType) {
+    unsigned int shader = createShader(path, shaderType);
+    if(shader == 0) {
+        return false;
+    }
+
+    if(m_programID == 0) {
+        strcpy(m_lastMessageBuffer, "Cannot attach the shader cause program is not created.");
+        return false;
+    }
+
+    glAttachShader(m_programID, shader);
+    glDeleteShader(shader);
+
+    return true;
+}
+
+bool Program::link() {
+    if(m_programID == 0) {
+        strcpy(m_lastMessageBuffer, "Cannot link the program cause program is not created.");
+        return false;
+    }
+
+    glLinkProgram(m_programID);
+
+    GLint linkStatus;
+    glGetProgramiv(m_programID, GL_LINK_STATUS, &linkStatus);
+    if(linkStatus != GL_TRUE) {
+
+        GLint logLen = 0;
+        glGetProgramInfoLog(m_programID, BUF_SIZE, &logLen, m_lastMessageBuffer);
+        m_lastMessageBuffer[logLen] = '\0';
+
+        return false;
+    }
+
+    return true;
 }

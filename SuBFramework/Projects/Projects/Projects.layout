@@ -7,9 +7,29 @@
 			<Cursor1 position="0" topLine="0" />
 		</Cursor>
 	</File>
+	<File name="main_code/2c_triangle.cpp" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2366" topLine="38" />
+		</Cursor>
+	</File>
+	<File name="common/src/Program.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2049" topLine="60" />
+		</Cursor>
+	</File>
 	<File name="main_code/2c_point.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="21" topLine="40" />
+			<Cursor1 position="756" topLine="24" />
+		</Cursor>
+	</File>
+	<File name="main_code/3с_attribute_test.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="436" topLine="14" />
+		</Cursor>
+	</File>
+	<File name="common/Program.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="609" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

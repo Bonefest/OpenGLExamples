@@ -22,8 +22,10 @@ public:
 
     inline unsigned int getProgramID() const { return m_programID; }
 
-    //bool loadShader(const std::string& path, GLEnum shaderType);
-    //bool compileProgram();
+    // Functions for manual building a program
+    void reset();
+    bool loadShader(const std::string& path, GLenum shaderType);
+    bool link();
 
     inline std::string getError() const { return m_lastMessageBuffer; }
 

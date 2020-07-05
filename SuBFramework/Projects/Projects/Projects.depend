@@ -133,11 +133,11 @@
 	<sstream>
 	<iostream>
 
-1593720234 /home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/common/Program.h
+1593976205 /home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/common/Program.h
 	<string>
 	"sb7.h"
 
-1593720957 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/3с_attribute_test.cpp
+1593721187 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/3с_attribute_test.cpp
 	<iostream>
 	"sb7.h"
 	"Program.h"

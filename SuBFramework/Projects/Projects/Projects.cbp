@@ -36,6 +36,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add directory="common" />
 		</Compiler>
 		<Unit filename="../../src/sb7/gl3w.c">
 			<Option compilerVar="CC" />
@@ -46,9 +47,12 @@
 		<Unit filename="../../src/sb7/sb7object.cpp" />
 		<Unit filename="../../src/sb7/sb7shader.cpp" />
 		<Unit filename="../../src/sb7/sb7textoverlay.cpp" />
+		<Unit filename="common/Program.h" />
+		<Unit filename="common/src/Program.cpp" />
 		<Unit filename="main_code/2c_point.cpp" />
 		<Unit filename="main_code/2c_rainbow_screen.cpp" />
 		<Unit filename="main_code/2c_triangle.cpp" />
+		<Unit filename="main_code/3с_attribute_test.cpp" />
 		<Extensions>
 			<envvars />
 			<code_completion />

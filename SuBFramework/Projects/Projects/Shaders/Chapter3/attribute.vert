@@ -13,6 +13,6 @@ void main() {
                              vec3( 0.0,  0.5, -0.5),
                              vec3( 0.5, -0.5, -0.5));
 
-    gl_Position = vec4(positions[gl_VertexID], 1.0);
+    gl_Position = vec4(positions[gl_VertexID] + offset, 1.0);
 
 }
