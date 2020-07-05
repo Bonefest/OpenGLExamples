@@ -3,20 +3,28 @@
 #include "sb7.h"
 #include "Program.h"
 
-class AttributeTestApp: public sb7::application {
+class TesselationApp: public sb7::application {
 public:
 
     virtual void startup() {
 
-        if(!m_program.loadShaders("Shaders/Chapter3/attribute.vert",
-                                  "Shaders/Chapter3/attribute.frag")) {
+        m_program.reset();
+        if(!m_program.loadShader("Shaders/Chapter3/attribute.vert", GL_VERTEX_SHADER) ||
+           !m_program.loadShader("Shaders/Chapter3/attribute.frag", GL_FRAGMENT_SHADER) ||
+           !m_program.loadShader("Shaders/Chapter3/tessellation.tcs", GL_TESS_CONTROL_SHADER) ||
+           !m_program.loadShader("Shaders/Chapter3/tessellation.tes", GL_TESS_EVALUATION_SHADER) ||
+           !m_program.link()) {
 
-            std::cout << "Error:" << m_program.getError() << '\n';
+            std::cout << m_program.getError();
+
         }
 
+        glPatchParameteri(GL_PATCH_VERTICES, 3);
+
+        glLineWidth(4.0f);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
         glCreateVertexArrays(1, &m_vao);
-        glPointSize(32.0f);
     }
 
     virtual void render(double currentTime) {
@@ -34,7 +42,7 @@ public:
         glVertexAttrib3fv(1, color);
 
         glBindVertexArray(m_vao);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_PATCHES, 0, 3);
     }
 
     virtual void shutdown() {
@@ -49,4 +57,4 @@ private:
 
 };
 
-//DECLARE_MAIN(AttributeTestApp)
+DECLARE_MAIN(TesselationApp);

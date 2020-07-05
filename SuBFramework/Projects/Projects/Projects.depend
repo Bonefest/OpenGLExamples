@@ -127,7 +127,7 @@
 	<iostream>
 	"sb7.h"
 
-1593721128 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/common/src/Program.cpp
+1593976264 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/common/src/Program.cpp
 	"../Program.h"
 	<fstream>
 	<sstream>
@@ -137,7 +137,12 @@
 	<string>
 	"sb7.h"
 
-1593721187 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/3с_attribute_test.cpp
+1593976500 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/3с_attribute_test.cpp
+	<iostream>
+	"sb7.h"
+	"Program.h"
+
+1593978641 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/3c_tessellation.cpp
 	<iostream>
 	"sb7.h"
 	"Program.h"
