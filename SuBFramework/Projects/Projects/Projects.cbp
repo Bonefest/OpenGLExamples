@@ -47,6 +47,7 @@
 		<Unit filename="../../src/sb7/sb7object.cpp" />
 		<Unit filename="../../src/sb7/sb7shader.cpp" />
 		<Unit filename="../../src/sb7/sb7textoverlay.cpp" />
+		<Unit filename="3c_tessellation.cpp" />
 		<Unit filename="common/Program.h" />
 		<Unit filename="common/src/Program.cpp" />
 		<Unit filename="main_code/2c_point.cpp" />

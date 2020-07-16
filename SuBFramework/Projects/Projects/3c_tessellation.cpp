@@ -13,6 +13,7 @@ public:
            !m_program.loadShader("Shaders/Chapter3/attribute.frag", GL_FRAGMENT_SHADER) ||
            !m_program.loadShader("Shaders/Chapter3/tessellation.tcs", GL_TESS_CONTROL_SHADER) ||
            !m_program.loadShader("Shaders/Chapter3/tessellation.tes", GL_TESS_EVALUATION_SHADER) ||
+           !m_program.loadShader("Shaders/Chapter3/tessellation.gmt", GL_GEOMETRY_SHADER) ||
            !m_program.link()) {
 
             std::cout << m_program.getError();
@@ -21,7 +22,7 @@ public:
 
         glPatchParameteri(GL_PATCH_VERTICES, 3);
 
-        glLineWidth(4.0f);
+        glPointSize(5.0f);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
         glCreateVertexArrays(1, &m_vao);
