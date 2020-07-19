@@ -58,4 +58,4 @@ private:
 
 };
 
-DECLARE_MAIN(TesselationApp);
+//DECLARE_MAIN(TesselationApp);

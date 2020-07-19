@@ -8,8 +8,8 @@ public:
 
     virtual void startup() {
 
-        if(!m_program.loadShaders("Shaders/Chapter3/attribute.vert",
-                                  "Shaders/Chapter3/attribute.frag")) {
+        if(!m_program.loadShaders("Shaders/Chapter3/interpolation.vert",
+                                  "Shaders/Chapter3/interpolation.frag")) {
 
             std::cout << "Error:" << m_program.getError() << '\n';
         }
@@ -49,4 +49,4 @@ private:
 
 };
 
-//DECLARE_MAIN(AttributeTestApp)
+DECLARE_MAIN(AttributeTestApp)

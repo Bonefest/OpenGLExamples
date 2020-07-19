@@ -1,0 +1,10 @@
+#version 410 core
+
+out vec4 outColor;
+
+void main() {
+  outColor = vec4(sin(gl_Fragcoord.x * 0.25),
+	  cos(gl_Fragcoord.y * 0.25),
+	  sin(gl_Fragcoord.x * 0.25),
+	  1.0);
+}
