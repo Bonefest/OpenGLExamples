@@ -14,16 +14,7 @@ public:
             std::cout << "Error:" << m_program.getError() << '\n';
         }
 
-        int availableExtensions;
-        glGetIntegerv(GL_NUM_EXTENSIONS, &availableExtensions);
-        const unsigned char* extensionName = NULL;
-        for(int i = 0; i < availableExtensions; ++i) {
-          extensionName = glGetStringi(GL_EXTENSIONS, i);
-          std::cout << extensionName << std::endl;
-        }
-        std::cout << "Total: " << availableExtensions << "\n";
-      
-        
+
         glCreateVertexArrays(1, &m_vao);
         glPointSize(32.0f);
     }
@@ -58,4 +49,4 @@ private:
 
 };
 
-//DECLARE_MAIN(AttributeTestApp)
+DECLARE_MAIN(AttributeTestApp)

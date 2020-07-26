@@ -1,0 +1,9 @@
+#version 330 core
+
+uniform vec3 quadratic_vertices[3];
+
+void main() {
+
+  gl_Position = vec4(quadratic_vertices[gl_VertexID], 1.0);
+
+}

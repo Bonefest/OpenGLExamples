@@ -58,4 +58,4 @@ private:
 
 };
 
-//DECLARE_MAIN(AttributeTestApp)
+DECLARE_MAIN(AttributeTestApp)

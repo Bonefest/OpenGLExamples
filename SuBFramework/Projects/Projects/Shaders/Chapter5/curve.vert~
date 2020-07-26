@@ -1,0 +1,27 @@
+#version 330 core
+
+uniform vec3 quadratic_vertices[3];
+uniform int vertices_number;
+
+vec3 quadraticBezier(vec3 pointA, vec3 pointB, vec3 pointC, float t) {
+
+  vec3 pointE = mix(pointA, pointB, t);
+  vec3 pointD = mix(pointB, pointC, t);
+  vec3 pointF = mix(pointE, pointD, t);
+
+  return pointF;
+}
+
+void main() {
+
+  float tVal = 0.0f;
+  if(vertices_number > 1) {
+    float(gl_VertexID) / float(vertices_number - 1);
+  }
+
+  gl_Position = quadraticBezier(quadratic_vertices[0],
+                                quadratic_vertices[1],
+                                quadratic_vertices[2],
+                                tVal);
+
+}

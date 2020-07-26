@@ -137,12 +137,17 @@
 	<string>
 	"sb7.h"
 
-1595188633 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/3с_attribute_test.cpp
+1595797084 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/3с_attribute_test.cpp
 	<iostream>
 	"sb7.h"
 	"Program.h"
 
 1595187219 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/3c_tessellation.cpp
+	<iostream>
+	"sb7.h"
+	"Program.h"
+
+1595798420 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/5c_curve.cpp
 	<iostream>
 	"sb7.h"
 	"Program.h"
