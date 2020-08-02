@@ -78,4 +78,4 @@ private:
   unsigned int m_iterationsNumber;
 };
 
-DECLARE_MAIN(AttributeTestApp)
+//DECLARE_MAIN(AttributeTestApp)

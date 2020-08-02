@@ -1,0 +1,64 @@
+#include <iostream>
+
+#include "sb7.h"
+#include "Program.h"
+
+class AttributeTestApp: public sb7::application {
+public:
+
+  virtual void startup() {
+
+    if(!m_program.loadShaders("Shaders/Chapter5/vao_buffer.vert",
+                              "Shaders/Chapter5/vao_buffer.frag")) {
+
+      std::cout << "Error:" << m_program.getError() << '\n';
+    }
+
+    glCreateVertexArrays(1, &m_vao);
+    glBindVertexArray(m_vao);
+
+    float vertices[] = {
+                       -0.5f,  0.0f, -0.5f,
+                        0.0f,  0.5f, -0.5f,
+                        0.5f,  0.0f, -0.5f,
+                        0.0f, -0.5f, -0.5f
+    };
+
+
+    glCreateBuffers(1, &m_vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+    glBufferStorage(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+  }
+
+  virtual void render(double currentTime) {
+
+    GLfloat color[] = {1.0, 1.0, 1.0, 1.0};
+
+    glClearBufferfv(GL_COLOR, 0, color);
+
+
+
+    m_program.useProgram();
+
+    glBindVertexArray(m_vao);
+    glDrawArrays(GL_LINE_STRIP, 0, m_iterationsNumber);
+
+  }
+
+  virtual void shutdown() {
+
+    glDeleteVertexArrays(1, &m_vao);
+  }
+
+
+private:
+  unsigned int m_vao;
+  unsigned int m_vbo;
+  Program      m_program;
+  Program      m_displayProgram;
+
+  unsigned int m_iterationsNumber;
+};
+
+DECLARE_MAIN(AttributeTestApp)
