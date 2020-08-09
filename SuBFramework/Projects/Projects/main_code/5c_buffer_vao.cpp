@@ -64,4 +64,4 @@ private:
 
 };
 
-DECLARE_MAIN(BufferTest)
+//DECLARE_MAIN(BufferTest)

@@ -147,7 +147,12 @@
 	"sb7.h"
 	"Program.h"
 
-1596400890 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/5c_curve.cpp
+1597003778 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/5c_curve.cpp
+	<iostream>
+	"sb7.h"
+	"Program.h"
+
+1597003778 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/5c_buffer_vao.cpp
 	<iostream>
 	"sb7.h"
 	"Program.h"
