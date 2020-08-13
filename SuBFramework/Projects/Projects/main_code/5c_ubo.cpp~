@@ -1,0 +1,77 @@
+#include <iostream>
+
+#include "sb7.h"
+#include "Program.h"
+
+class UBO_App: public sb7::application {
+public:
+
+  virtual void startup() {
+
+    m_program1.loadShaders("Shaders/Chapter5/ubo.vert", "Shaders/Chapter5/ubo_1.frag");
+    m_program2.loadShaders("Shaders/Chapter5/ubo.vert", "Shaders/Chapter5/ubo_2.frag");
+    m_program3.loadShaders("Shaders/Chapter5/ubo.vert", "Shaders/Chapter5/ubo_3.frag");
+    m_program4.loadShaders("Shaders/Chapter5/ubo.vert", "Shaders/Chapter5/ubo_4.frag");
+
+    glCreateVertexArrays(1, &m_vao);
+    glBindVertexArray(m_vao);
+
+    float vertices[] = {
+     -0.5f, -0.5f, -0.5f,
+     -0.5f,  0.5f, -0.5f,
+      0.5f,  0.5f, -0.5f,
+
+      0.5f,  0.5f, -0.5f,
+      0.5f, -0.5f, -0.5f,
+     -0.5f, -0.5f, -0.5f
+    };
+
+    glGenBuffers(1, &m_vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glVertexArrayVertexBuffer(m_vao, 0, m_vbo, 0, sizeof(float) * 3);
+    glVertexArrayAttribFormat(m_vao, 0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 0);
+    glVertexArrayAttribBinding(m_vao, 0, 0);
+    glEnableVertexArrayAttrib(m_vao, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
+    glGenBuffers(1, &m_ubo);
+    glBindBuffer(GL_UNIFORM_BUFFER, m_ubo);
+    glBufferData(
+
+  }
+
+  virtual void render(double currentTime) {
+
+    GLfloat color[] = {1.0, 1.0, 1.0, 1.0};
+
+    glClearBufferfv(GL_COLOR, 0, color);
+
+    m_program1.useProgram();
+
+    glBindVertexArray(m_vao);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+
+  }
+
+  virtual void shutdown() {
+
+    glDeleteBuffers(1, &m_vbo);
+    glDeleteVertexArrays(1, &m_vao);
+
+  }
+
+
+private:
+  unsigned int m_ubo;
+  unsigned int m_vao;
+  unsigned int m_vbo;
+
+  Program      m_program1;
+  Program      m_program2;
+  Program      m_program3;
+  Program      m_program4;
+};
+
+DECLARE_MAIN(UBO_App);

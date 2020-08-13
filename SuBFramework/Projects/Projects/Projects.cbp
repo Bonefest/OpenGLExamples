@@ -56,6 +56,7 @@
 		<Unit filename="main_code/3с_attribute_test.cpp" />
 		<Unit filename="main_code/5c_buffer_vao.cpp" />
 		<Unit filename="main_code/5c_curve.cpp" />
+		<Unit filename="main_code/5c_soa_aos.cpp" />
 		<Extensions>
 			<envvars />
 			<code_completion />

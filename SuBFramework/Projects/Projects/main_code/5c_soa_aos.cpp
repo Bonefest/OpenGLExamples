@@ -49,7 +49,7 @@ public:
        0.0f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,
        0.5f,  0.0f, -0.5f,  0.0f, 0.0f, 1.0f
     };
-    
+
     glCreateBuffers(1, &m_aos);
     glNamedBufferStorage(m_aos, sizeof(vertices_and_colors), vertices_and_colors, 0);
     glVertexArrayVertexBuffer(m_vao, 0, m_aos, 0, sizeof(float) * 6);
@@ -60,7 +60,7 @@ public:
     glVertexArrayAttribFormat(m_vao, 1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3);
     glVertexArrayAttribBinding(m_vao, 1, 0);
     glEnableVertexArrayAttrib(m_vao, 1);
-    
+
   }
 
   virtual void render(double currentTime) {
@@ -92,4 +92,4 @@ private:
   Program      m_displayProgram;
 };
 
-DECLARE_MAIN(SAO_AOS_App)
+//DECLARE_MAIN(SAO_AOS_App)
