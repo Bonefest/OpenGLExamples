@@ -2,7 +2,7 @@
 
 layout(location = 0) in vec3 inPos;
 
-uniform Matrices {
+layout(std140) uniform Matrices {
 
   mat4 projection;
   mat4 view;

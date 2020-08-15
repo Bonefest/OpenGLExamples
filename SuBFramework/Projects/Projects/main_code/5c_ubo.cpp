@@ -97,8 +97,8 @@ public:
     glBindBuffer(GL_UNIFORM_BUFFER, m_sharedLayoutUBO);
 
     static const GLchar* uniformNames[2] = {
-		          "Matrices.projection",
-		          "Matrices.view"
+       "projection",
+       "view"
     };
 
     GLuint uniformIndices[2];
@@ -168,4 +168,4 @@ private:
   Program      m_program4;
 };
 
-DECLARE_MAIN(UBO_App);
+// DECLARE_MAIN(UBO_App);
