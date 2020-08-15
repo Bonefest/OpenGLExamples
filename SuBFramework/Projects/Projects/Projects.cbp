@@ -37,6 +37,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 			<Add directory="common" />
+			<Add directory="../../../../LearnOpenGL" />
 		</Compiler>
 		<Unit filename="../../src/sb7/gl3w.c">
 			<Option compilerVar="CC" />
@@ -57,6 +58,7 @@
 		<Unit filename="main_code/5c_buffer_vao.cpp" />
 		<Unit filename="main_code/5c_curve.cpp" />
 		<Unit filename="main_code/5c_soa_aos.cpp" />
+		<Unit filename="main_code/5c_ubo.cpp" />
 		<Extensions>
 			<envvars />
 			<code_completion />
