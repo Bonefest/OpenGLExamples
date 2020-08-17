@@ -1060,7 +1060,15 @@
 1578255577 /home/miofix/Programming/Graphics/LearnOpenGL/glm/gtc/type_ptr.inl
 	<cstring>
 
-1597683427 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/5c_cube_1.cpp
+1597691002 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/5c_cube_1.cpp
+	<iostream>
+	"sb7.h"
+	"Program.h"
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+
+1597693247 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/5c_texture_1.cpp
 	<iostream>
 	"sb7.h"
 	"Program.h"
