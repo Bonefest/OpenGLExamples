@@ -8,7 +8,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 
-class Cube_1_App: public sb7::application {
+class Cube_2_App: public sb7::application {
 public:
 
   virtual void startup() {
@@ -85,25 +85,33 @@ public:
     glClear(GL_DEPTH_BUFFER_BIT);
 
     glm::mat4 view = glm::mat4(1.0f);
-    glm::mat4 model = glm::mat4(1.0f);
 
-    model = glm::translate(model, glm::vec3(sinf(currentTime * 1.3f),
-                                                               cosf(currentTime * 1.72f),
-                                                               sinf(currentTime * 1.19f) * cosf(currentTime * 1.33f) - 5.0f));
+    for(int i = 0; i < 10; ++i) {
 
-    model = glm::rotate(model, (float)currentTime, glm::vec3(-1.0f, 1.0f, 0.0f));
+      glm::mat4 model = glm::mat4(1.0f);
 
-    glUniformMatrix4fv(glGetUniformLocation(m_program.getProgramID(), "model"), 1, GL_FALSE, glm::value_ptr(model));
+      float param = (i + 1) * currentTime * 0.2f;
 
-    glUniformMatrix4fv(glGetUniformLocation(m_program.getProgramID(), "view"), 1, GL_FALSE, glm::value_ptr(view));
+      model = glm::translate(model, glm::vec3(0.0f, 0.0f, -i * 0.5f);
 
-    glUniformMatrix4fv(glGetUniformLocation(m_program.getProgramID(), "projection"), 1, GL_FALSE, glm::value_ptr(m_projection));
+      model = glm::translate(model, glm::vec3(sinf(param * 1.3f),
+                                              cosf(param * 1.72f),
+                                              sinf(param * 1.19f) * cosf(param * 1.33f) - 5.0f));
 
-    glBindVertexArray(m_vao);
+      model = glm::rotate(model, (float)currentTime, glm::vec3(-1.0f, 1.0f, float(i) / 10.0f));
 
-    m_program.useProgram();
+      glUniformMatrix4fv(glGetUniformLocation(m_program.getProgramID(), "model"), 1, GL_FALSE, glm::value_ptr(model));
 
-    glDrawArrays(GL_TRIANGLES, 0, 36);
+      glUniformMatrix4fv(glGetUniformLocation(m_program.getProgramID(), "view"), 1, GL_FALSE, glm::value_ptr(view));
+
+      glUniformMatrix4fv(glGetUniformLocation(m_program.getProgramID(), "projection"), 1, GL_FALSE, glm::value_ptr(m_projection));
+
+      glBindVertexArray(m_vao);
+
+      m_program.useProgram();
+
+      glDrawArrays(GL_TRIANGLES, 0, 36);
+    }
   }
 
   virtual void onResize(int w, int h) {
@@ -118,7 +126,7 @@ public:
     glViewport(viewportData[0], viewportData[1], w, h);
 
   }
-
+pp
   virtual void shutdown() {
 
     glDeleteBuffers(1, &m_vbo);
@@ -137,4 +145,4 @@ private:
   float        m_aspect;
 };
 
-//DECLARE_MAIN(Cube_1_App);
+DECLARE_MAIN(Cube_2_App);
