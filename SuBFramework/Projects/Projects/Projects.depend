@@ -93,7 +93,7 @@
 
 1592762721 /home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/include/sb7ktx.h
 
-1592762721 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/src/sb7/sb7object.cpp
+1598704677 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/src/sb7/sb7object.cpp
 	"GL/gl3w.h"
 	<object.h>
 	<stdio.h>
@@ -162,7 +162,7 @@
 	"sb7.h"
 	"Program.h"
 
-1597521513 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/5c_ubo.cpp
+1598698571 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/5c_ubo.cpp
 	<iostream>
 	"sb7.h"
 	"Program.h"
@@ -1068,10 +1068,20 @@
 	<glm/gtc/matrix_transform.hpp>
 	<glm/gtc/type_ptr.hpp>
 
-1597693247 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/5c_texture_1.cpp
+1598698596 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/5c_texture_1.cpp
 	<iostream>
 	"sb7.h"
 	"Program.h"
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+
+1598705281 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/5c_torus.cpp
+	<iostream>
+	"sb7.h"
+	"object.h"
+	"Program.h"
+	"sb7ktx.h"
 	<glm/glm.hpp>
 	<glm/gtc/matrix_transform.hpp>
 	<glm/gtc/type_ptr.hpp>

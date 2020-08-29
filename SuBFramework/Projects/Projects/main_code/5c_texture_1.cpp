@@ -46,15 +46,6 @@ public:
     glCreateTextures(GL_TEXTURE_2D, 1, &m_texture);
     glTextureStorage2D(m_texture, 1, GL_RGBA32F, width, height);
 
-    glBindTexture(GL_TEXTURE_2D, m_texture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    glGenerateMipmap(GL_TEXTURE_2D);
-
-
     float* data = new float[width * height * 4];
     memset(data, 1, sizeof(float) * width * height * 4);
 
@@ -144,4 +135,4 @@ private:
   Program      m_program;
 };
 
-DECLARE_MAIN(Texture_1_App);
+//DECLARE_MAIN(Texture_1_App);

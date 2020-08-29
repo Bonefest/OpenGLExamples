@@ -32,32 +32,32 @@ float deltaTime = 0.0f;
 float lastTime = 0.0f;
 
 int main() {
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+  glfwInit();
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(640, 480, "LearnOpenGL", NULL, NULL);
-    if(window == NULL) {
-        std::cout << "Unable to create window!\n";
-        glfwTerminate();
-        return -1;
-    }
-    glfwMakeContextCurrent(window);
+  GLFWwindow* window = glfwCreateWindow(640, 480, "LearnOpenGL", NULL, NULL);
+  if(window == NULL) {
+    std::cout << "Unable to create window!\n";
+    glfwTerminate();
+    return -1;
+  }
+  glfwMakeContextCurrent(window);
 
-    if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::cout << "Unable to initialize GLAD!\n";
-        return -1;
-    }
+  if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+    std::cout << "Unable to initialize GLAD!\n";
+    return -1;
+  }
 
-    //glViewport(0, 0, 640, 480); will be called as well for the first loading
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+  //glViewport(0, 0, 640, 480); will be called as well for the first loading
+  glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    if(glfwRawMouseMotionSupported())
-        glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+  if(glfwRawMouseMotionSupported())
+    glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
 
-    glfwSetCursorPosCallback(window, cursorMovementCallback);
+  glfwSetCursorPosCallback(window, cursorMovementCallback);
 
 
     // SHADER PREPARING ------------------------------------------------------

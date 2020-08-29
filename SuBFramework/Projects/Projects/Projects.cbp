@@ -59,6 +59,7 @@
 		<Unit filename="main_code/5c_cube_1.cpp" />
 		<Unit filename="main_code/5c_curve.cpp" />
 		<Unit filename="main_code/5c_soa_aos.cpp" />
+		<Unit filename="main_code/5c_texture_1.cpp" />
 		<Unit filename="main_code/5c_ubo.cpp" />
 		<Extensions>
 			<envvars />

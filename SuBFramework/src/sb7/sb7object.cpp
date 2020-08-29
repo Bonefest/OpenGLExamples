@@ -97,6 +97,7 @@ void object::load(const char * filename)
         }
     }
 
+    printf("HERE\n");
 // failed:
 
     glGenVertexArrays(1, &vao);
