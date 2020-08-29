@@ -1,22 +1,17 @@
 #version 430 core
 
-layout(location = 0) in vec4 inVert;
-layout(location = 1) in vec3 normal;
-//layout(location = 4) in vec2 inTextCoord;
+layout(location = 0) in vec3 inVert;
+layout(location = 1) in vec2 inTextCoord;
 
-uniform mat4 proj;
-uniform mat4 view;
-uniform mat4 model
+layout(location = 0) uniform mat4 proj;
+layout(location = 1) uniform mat4 view;
+layout(location = 2) uniform mat4 model;
 
 out vec2 textCoord;
 
-out vec3 pos;
-
 void main() {
 
-  gl_Position = proj * view * model * vec4(inVert.xyz, 1.0f);
-
-  pos = inVert.xyz;
+  gl_Position = proj * view * model * vec4(inVert * 2.0f, 1.0f);
 
   textCoord = inTextCoord;
 

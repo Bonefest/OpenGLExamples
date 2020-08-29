@@ -93,7 +93,7 @@
 
 1592762721 /home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/include/sb7ktx.h
 
-1598704677 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/src/sb7/sb7object.cpp
+1598710461 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/src/sb7/sb7object.cpp
 	"GL/gl3w.h"
 	<object.h>
 	<stdio.h>
@@ -1076,7 +1076,7 @@
 	<glm/gtc/matrix_transform.hpp>
 	<glm/gtc/type_ptr.hpp>
 
-1598705281 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/5c_torus.cpp
+1598711849 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/main_code/5c_torus.cpp
 	<iostream>
 	"sb7.h"
 	"object.h"
@@ -1085,4 +1085,55 @@
 	<glm/glm.hpp>
 	<glm/gtc/matrix_transform.hpp>
 	<glm/gtc/type_ptr.hpp>
+	"Loader.h"
+
+1592762721 /home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/include/shader.h
+
+1598710364 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/common/src/helper.cpp
+	"helper.h"
+	"stb_image.h"
+	<iostream>
+
+1598710340 /home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/common/helper.h
+	<GLFW/glfw3.h>
+	<string>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+
+1578162896 /home/miofix/Programming/Graphics/Dependecies/include/glad/glad.h
+	<KHR/khrplatform.h>
+
+1578162896 /home/miofix/Programming/Graphics/Dependecies/include/KHR/khrplatform.h
+	<stdint.h>
+	<inttypes.h>
+	<stdint.h>
+
+1579630829 /home/miofix/Programming/Graphics/LearnOpenGL/stb_image.h
+	"stb_image.h"
+	<stdio.h>
+	<stdlib.h>
+	<stdarg.h>
+	<stddef.h>
+	<stdlib.h>
+	<string.h>
+	<limits.h>
+	<math.h>
+	<stdio.h>
+	<assert.h>
+	<stdint.h>
+	<emmintrin.h>
+	<intrin.h>
+	<arm_neon.h>
+
+1598711297 source:/home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/common/src/Loader.cpp
+	"Loader.h"
+	"GL/gl3w.h"
+	<vector>
+	"helper.h"
+
+1598709864 /home/miofix/Programming/Graphics/LearnOpenGL/SuBFramework/Projects/Projects/common/Loader.h
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+	<string>
 
