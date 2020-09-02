@@ -13,14 +13,26 @@
 
 using namespace sb7;
 
-class Torus_App: public sb7::application {
+class Tunnel_App: public sb7::application {
 public:
 
   virtual void startup() {
 
     m_program.loadShaders("Shaders/Chapter5/torus.vert", "Shaders/Chapter5/torus.frag");
     printf("%s\n", m_program.getError().c_str());
-    m_torusObject.load("resources/objects/torus2.obj", "resources/textures/chess.jpg");
+
+
+    GLfloat quadVertices[] =
+    {
+     -0.5f, -0.5f, 0.0f,   0.0f, 0.0f,
+     -0.5f,  0.5f, 0.0f,   0.0f, 1.0f,
+      0.5f,  0.5f, 0.0f,   1.0f, 1.0f,
+
+     -0.5f, -0.5f, 0.0f,   0.0f, 0.0f,
+      0.5f,  0.5f, 0.0f,   1.0f, 1.0f,
+      0.5f,  0.5f, 0.0f,   1.0f, 1.0f
+    };
+
 
     m_projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
     m_view = glm::lookAt(glm::vec3(5.0f, 5.0f, 5.0f),
@@ -60,4 +72,4 @@ private:
   glm::mat4    m_view;
 };
 
-//DECLARE_MAIN(Torus_App);
+//DECLARE_MAIN(Tunnel_App);
