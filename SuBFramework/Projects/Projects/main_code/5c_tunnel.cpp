@@ -65,7 +65,8 @@ public:
 
   void initTransforms() {
     m_projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
-    m_view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -0.1f, -1.0f));
+  //m_view = glm::translate(glm::mat4(1.0f), glm::vec3(-5.0f, -5.0f, -5.0f));
+    m_view = glm::mat4(1.0f);
 
     m_leftWall = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     m_rightWall = glm::rotate(glm::mat4(1.0f), glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -79,12 +80,56 @@ public:
     glClearColor(0.73f, 0.88f, 0.98f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    float offset = std::fmod(currentTime, 1.0f);
+
+    m_view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, offset));
+
     m_program.useProgram();
     glUniformMatrix4fv(0, 1, GL_FALSE, glm::value_ptr(m_projection));
     glUniformMatrix4fv(1, 1, GL_FALSE, glm::value_ptr(m_view));
-    glUniformMatrix4fv(2, 1, GL_FALSE, glm::value_ptr(m_floor));
 
     glBindVertexArray(m_vao);
+
+    int iterations = 20;
+
+    for(int i = 0; i < iterations; ++i) {
+      // Walls rendering
+      glBindTexture(GL_TEXTURE_2D, m_wallTexture);
+
+      glm::mat4 leftWall = glm::translate(glm::mat4(1.0f),
+                                          glm::vec3(-0.5f, 0.0f, -i * 1.0f)) * m_leftWall;
+      glUniformMatrix4fv(2, 1, GL_FALSE, glm::value_ptr(leftWall));
+      glDrawArrays(GL_TRIANGLES, 0, 6);
+
+      glm::mat4 rightWall = glm::translate(glm::mat4(1.0f),
+                                           glm::vec3( 0.5f, 0.0f, -i * 1.0f)) * m_rightWall;
+      glUniformMatrix4fv(2, 1, GL_FALSE, glm::value_ptr(rightWall));
+      glDrawArrays(GL_TRIANGLES, 0, 6);
+
+      // Floor rendering
+      glBindTexture(GL_TEXTURE_2D, m_floorTexture);
+
+      glm::mat4 floor = glm::translate(glm::mat4(1.0f),
+                                       glm::vec3(0.0f, -0.5f, -i * 1.0f)) * m_floor;
+      glUniformMatrix4fv(2, 1, GL_FALSE, glm::value_ptr(floor));
+      glDrawArrays(GL_TRIANGLES, 0, 6);
+
+      // Ceiling rendering
+      glBindTexture(GL_TEXTURE_2D, m_ceilingTexture);
+
+      glm::mat4 ceiling = glm::translate(glm::mat4(1.0f),
+                                         glm::vec3(0.0f, 0.5f, -i * 1.0f)) * m_ceiling;
+      glUniformMatrix4fv(2, 1, GL_FALSE, glm::value_ptr(ceiling));
+      glDrawArrays(GL_TRIANGLES, 0, 6);
+
+    }
+
+    glBindTexture(GL_TEXTURE_2D, m_wallTexture);
+
+    glm::mat4 end = glm::translate(glm::mat4(1.0f),
+                                   glm::vec3(0.0f, 0.0f, -(iterations - 2) - offset));
+
+    glUniformMatrix4fv(2, 1, GL_FALSE, glm::value_ptr(end));
     glDrawArrays(GL_TRIANGLES, 0, 6);
 
   }
