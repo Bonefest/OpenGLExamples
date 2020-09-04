@@ -51,6 +51,7 @@
 		<Unit filename="3c_tessellation.cpp" />
 		<Unit filename="common/Program.h" />
 		<Unit filename="common/src/Program.cpp" />
+		<Unit filename="common/src/helper.cpp" />
 		<Unit filename="main_code/2c_point.cpp" />
 		<Unit filename="main_code/2c_rainbow_screen.cpp" />
 		<Unit filename="main_code/2c_triangle.cpp" />
@@ -60,6 +61,7 @@
 		<Unit filename="main_code/5c_curve.cpp" />
 		<Unit filename="main_code/5c_soa_aos.cpp" />
 		<Unit filename="main_code/5c_texture_1.cpp" />
+		<Unit filename="main_code/5c_tunnel.cpp" />
 		<Unit filename="main_code/5c_ubo.cpp" />
 		<Extensions>
 			<envvars />

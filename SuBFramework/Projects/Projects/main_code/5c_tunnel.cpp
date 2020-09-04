@@ -10,6 +10,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "helper.h"
+#include "Common.h"
 
 using namespace sb7;
 
@@ -53,6 +54,12 @@ public:
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+    glCreateSamplers(1, &m_generalSampler);
+    glSamplerParameteri(m_generalSampler, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glSamplerParameteri(m_generalSampler, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glSamplerParameteri(m_generalSampler, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glSamplerParameteri(m_generalSampler, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
     glGenTextures(1, &m_wallTexture);
     loadTexture("resources/textures/brick.jpg", m_wallTexture, true);
 
@@ -61,6 +68,10 @@ public:
 
     glGenTextures(1, &m_ceilingTexture);
     loadTexture("resources/textures/ceiling.jpg", m_ceilingTexture, true);
+
+    glGenerateTextureMipmap(m_wallTexture);
+    glGenerateTextureMipmap(m_floorTexture);
+    glGenerateTextureMipmap(m_ceilingTexture);
   }
 
   void initTransforms() {
@@ -85,6 +96,8 @@ public:
     m_view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, offset));
 
     m_program.useProgram();
+    glBindSampler(0, m_generalSampler);
+
     glUniformMatrix4fv(0, 1, GL_FALSE, glm::value_ptr(m_projection));
     glUniformMatrix4fv(1, 1, GL_FALSE, glm::value_ptr(m_view));
 
@@ -135,9 +148,35 @@ public:
   }
 
   virtual void shutdown() {
-
+    glDeleteVertexArrays(1, &m_vao);
+    glDeleteBuffers(1, &m_vbo);
   }
 
+  virtual void onKey(int key, int action) {
+    Constants::KeyAction keyAction = Constants::KeyAction(action);
+    GLenum paramName = GL_NEAREST;
+    if(key == int('2') && keyAction == Constants::KeyAction::PRESS_FINISHED) {
+      paramName = GL_LINEAR;
+    }
+    else if(key == int('3') && keyAction ==Constants::KeyAction::PRESS_FINISHED) {
+      paramName = GL_LINEAR;
+    }
+    else if(key == int('4') && keyAction == Constants::KeyAction::PRESS_FINISHED) {
+      paramName = GL_NEAREST_MIPMAP_NEAREST;
+    }
+    else if(key == int('5') && keyAction == Constants::KeyAction::PRESS_FINISHED) {
+      paramName = GL_LINEAR_MIPMAP_NEAREST;
+    }
+    else if(key == int('6') && keyAction == Constants::KeyAction::PRESS_FINISHED) {
+      paramName = GL_NEAREST_MIPMAP_LINEAR;
+    }
+    else if(key == int('7') && keyAction == Constants::KeyAction::PRESS_FINISHED) {
+      paramName = GL_LINEAR_MIPMAP_LINEAR;
+    }
+
+    glSamplerParameteri(m_generalSampler, GL_TEXTURE_MIN_FILTER, paramName);
+    glSamplerParameteri(m_generalSampler, GL_TEXTURE_MAG_FILTER, paramName);
+  }
 
 private:
   Program      m_program;
@@ -156,6 +195,8 @@ private:
   unsigned int m_wallTexture;
   unsigned int m_floorTexture;
   unsigned int m_ceilingTexture;
+
+  unsigned int m_generalSampler;
 
 };
 
