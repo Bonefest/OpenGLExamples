@@ -14,7 +14,7 @@
 
 using namespace sb7;
 
-class Tunnel_App: public sb7::application {
+class Aliens_App: public sb7::application {
 public:
 
   virtual void startup() {
@@ -200,4 +200,4 @@ private:
 
 };
 
-//DECLARE_MAIN(Tunnel_App);
+DECLARE_MAIN(Aliens_App);

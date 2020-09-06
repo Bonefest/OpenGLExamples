@@ -1,0 +1,10 @@
+#version 430 core
+
+layout(location = 0) in int alienIndex;
+
+out vec2 tc;
+flat out int ai;
+
+void main() {
+
+}
